@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+
+
+{% block scripts %}
+<script src="/media/scripts/register.js"></script>
+{% endblock %}
+
+
+{% block content %}
+<div class="all-elements">
+{% include 'panel.html' %}
+   
+
+
+
+    <div id="content" class="page-content">
+    	<div class="page-header">
+        	<a href="#" class="deploy-sidebar"></a>
+            <div class="logo-top"><img src="/media/images/misc/logo.png"/></div>            
+        </div>
+        <div class="content-all">
+        <p class="title">РЕГИСТРАЦИЯ ЧЕРЕЗ</p>
+        <div class="login-social-section">
+                    <a href="#" class="login-social-button facebook-login">FACEBOOK</a>
+                    <a href="#" class="login-social-button vk-login">VK</a>
+                    <a href="#" class="login-social-button google-login">GOOGLE</a>
+                </div>
+
+        <article class="login-form">  
+
+            <p class="title-two">ИЛИ</p>
+                
+
+                
+                <div>
+                         
+             
+                        <div class="formSuccessMessageWrap" id="formSuccessMessageWrap">
+                            <div class="big-notification green-notification">
+                                <h3 class="uppercase">Отлично, теперь вы с нами </h3>
+                                <a href="#" class="close-big-notification">x</a>
+                                <p>Вас перенапавит сейчас...</p>
+                            </div>
+                        </div>
+                    
+                       <form action="/auth/register_new/" method="POST">
+                                    {% if register_error %}
+                                    <div class="static-notification-red tap-dismiss-notification">
+                                    <p class="center-text uppercase">{{ register_error }}</p>
+                                    </div>
+                                    {% endif %}
+
+
+                                    <label class="field-title contactEmailField">Email или username: <span>(обязательно)</span></label>
+                                    <input type="text" name="email" id="email" value="" class="contactField" />
+
+                                     <label class="field-title contactEmailField" for="contactEmailField">Пароль: <span>(обязательно)</span></label>
+                                    <input type="password" name="password" id="password" value="" class="contactField" /> 
+                                    
+                                
+                                    <div class="sex-choice">
+                                        <label class="field-title contactEmailField" for="contactEmailField">Пол:</label>
+                                        <a href="#" class="checkbox radio-one radio-one-checked" type="radio" id="women_check" >Женщина</a>
+                                        <a href="#" class="checkbox radio-one" type="radio" id="men_check" >Мужчина</a>
+                                    </div>
+                                    <input type="hidden" name="sex" value="men" id="sex_value"/> 
+
+                                    <input value="зарегистрироваться" type="submit"  class="buttonWrap button button-dark contactSubmitButton"/>
+        
+                        </form>       
+                    
+               
+
+                        <p class="p-under-the-form">Уже зарегистрированны?</p>
+                        <a class="under-the-form" href="/auth/login/">Войти</a> 
+                    
+                </div>
+               
+            
+            </article>
+            
+
+        </div>           
+    </div>                 
+</div>
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

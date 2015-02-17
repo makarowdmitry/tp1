@@ -1,0 +1,5 @@
+<form class="add-user-photo-form" enctype="multipart/form-data" method="post" id="image_update_form">
+    {% csrf_token %}
+    {{ form }}
+    <button type="submit">submit</button>
+</form>

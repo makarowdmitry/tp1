@@ -1,0 +1,143 @@
+{% extends 'base.html' %}
+
+{% block scripts %}
+
+<script src="/media/scripts/generation_links.js"></script>
+
+{% endblock %}
+{% block content %}
+
+
+
+<div class="windiw-info-block">
+    <p class="text-for-window"></p>
+    <div class="button-additional bt-no">нет</div>
+    <div class="button-general bt-yes">да</div>
+    <input class="what-do" type="hidden" name="" value=""/>
+</div>
+
+
+<div class="content-block add-link-tag">
+<p class="save-ok">Сохранено</p>
+
+   
+{% if tags_count < 0 %}
+
+<div class="empty-content-block">
+	<p>Здесь будут отображаться метки, у которых есть бренд,  но нет ссылки на магазин.</p>
+	<a href="/">OK</a>
+</div>
+
+{% else %}
+ 
+
+<article class="moderator-page add-link-tag"> 
+
+<div class="tag-block-edit-general photo{{ photo.id }}">
+   
+             
+        <div class="tag-block-edit tag{{ tag.id }}">
+            
+            <div class="tag-block-edit-right">
+                <input type="hidden" name="tag_id" value="{{ tag.id }}"/>
+                <label>Ссылка</label>
+     
+                <input type="text" value="{{ tag.url_raw }}" name="url_tag" placeholder="Ссылка на товар"/>
+
+                <label>{{ tag.get_brandname }}</label>
+                <div class="menu-item-block delete-bt-color tag-block-edit-right-delete js-button-delete">               
+                    <svg class="menu-item-block-svg" viewBox="0 0 24 24">
+                        <use xlink:href="#delete" ></use>
+                    </svg>
+                </div>
+                <input type="hidden" name="what_delete" value="{{ tag.id }}tag" />
+
+            </div>
+        </div>
+        
+
+        </div>
+
+
+   
+        <div class="photo-block">
+            <div class="photo-left-block">
+                <div class="tag-with-block moderator-page page-for-add-link">
+               
+                                                            
+
+                     <div class="tag-star-block js-mark-brand tag{{ tag.id }}" style="top:{{ tag.y_position }}; left:{{ tag.x_position }};" id="{{ tag.id }}" >
+                        <svg class="tag-star" viewBox="0 0 24 24">
+                            <use xlink:href="#star-mark"></use>
+                        </svg>
+                                             
+                    </div>   
+             
+                    
+                    <img id="img{{ photo.id }}" src="/uploads/{{ photo.image }}">
+
+                </div>              
+            </div>
+
+                       
+        
+         
+
+       
+
+
+        </div>        
+        
+    </article>
+
+
+     
+
+
+</div>
+
+
+
+<div class="footer"></div>
+<div class="bt-moderation-block-general">
+    <div class="bt-moderation-block page-for-add-link">
+  
+        <input type="hidden" name="what_delete" value="{{ item.id }}item" />
+        
+        <a href="/" class="button-additional bt-moderation">Отмена</a>
+        <a href="/add/{{ photo.item_id }}" class="button-general add-photo-bt">Редактировать</a>
+        
+        <a href="/generation_links" class="button-general bt-moderation page-for-add-link">Далее&nbsp;&nbsp;(осталось&nbsp; {{ tags_count }})</a> 
+
+      
+    </div> 
+</div>
+
+{% endif %}
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

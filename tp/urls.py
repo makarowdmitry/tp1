@@ -1,0 +1,70 @@
+from django.conf.urls import patterns, include, url
+from django.contrib import admin
+from item.views import *
+from django.conf.urls.static import static
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+import os
+
+urlpatterns = patterns('',
+                       url(r'^add/([0-9]+)?/$', add),
+                       url(r'^addpartner/([0-9]+)?/$', addpartner),
+                       url(r'^tag/$', tag),
+                       url(r'^faq/$', faq),
+                       url(r'^send_lead/$', send_lead),
+                       url(r'^help_update/$', help_update),
+                       url(r'tag_addpartner/$', tag_addpartner),
+                       url(r'like/$', like),
+                       url(r'^partner_signup/$', partner_signup),
+                       url(r'^delete_item/$', delete_item),
+                       url(r'^item_public_yes_no/$', item_public_yes_no),
+                       url(r'^save_general_settings_item/$', save_general_settings_item),
+                       url(r'^save_settings_business/$', save_settings_business),
+                       url(r'^save_settings_payment/$', save_settings_payment),                                            
+                       url(r'^item_post/$', item_post),
+                       url(r'^generation_links/$', generation_links),
+                       url(r'^tag_update/$', tag_update),
+                       url(r'^tag_update_z_index/$', tag_update_z_index),
+                       url(r'^tag_update_url/$', tag_update_url),  
+                       url(r'^tag_update_brand_name/$', tag_update_brand_name),  
+                       url(r'^tag_update_position/$', tag_update_position),                                                                
+                       url(r'^analytics/$', analytics),            
+                       url(r'^show_tag/$', show_tag),
+                       url(r'^delete_tag/$', delete_tag),
+                       url(r'^delete_objects/$', delete_objects),                       
+                       url(r'^get_tag/$', get_tag),
+                       url(r'^settings/$', settings),
+                       url(r'^update_image/(?P<pk>[\d]+)/$', PhotoUpdateView.as_view(), name='update_image'),
+                       url(r'^profile_image/(?P<pk>\d+)/$', ProfileImageView.as_view(), name='profile_image'),
+                       url(r'^sedit/$', sedit),
+                       url(r'^(?P<itemid>[0-9]+)/$', item),
+                       url(r'^buy(?P<tagid>[0-9]+)_(?P<itemid>[0-9]+)/$', tag_redirect),
+                       url(r'^add_photo/$', add_photo),
+                       url(r'^add_photo_more(?P<id_item>[0-9]+)/$', add_photo_more),
+                       url(r'^add_additional_photo(?P<id_item>[0-9]+)_(?P<id_photo>[0-9]+)/$', add_additional_photo),
+                       url(r'^accounts/', include('allauth.urls')),
+                       url(r'^admin/', include(admin.site.urls)),
+                       url(r'^auth/login/$', login),
+                       url(r'^auth/logout/$', logout),
+                       url(r'^auth/register/$', register),
+                       url(r'^auth/register_new/$', register_new),
+                       url(r'^save_settings_general/$', save_settings_general),
+                       url(r'^save_settings_pass/$', save_settings_pass),
+                       url(r'^subscribe/$', subscribe),
+                       url(r'^subscription/$', subscription),
+                       url(r'^save_tag/$', save_tag),
+                       url(r'^saved_tag/$', saved_tag),
+                       url(r'^sub_user_email/$', sub_user_email),
+                       url(r'^change_photo/$', change_photo),
+                       url(r'^(?P<usernamethis>([a-z]*[0-9]*\.*\-*\_*[A-Z]*)+)/$', username),   # ([a-z]*([0-9]*\.*\-*\_*)*[a-z]*[A-Z]*)+                                      
+                       url(r'^$', index),
+                       url(r'^.+/$', pageerror),
+                       )
+
+from django.conf import settings as st
+if st.DEBUG:
+    urlpatterns = patterns('',
+                           url(r'^uploads/(?P<path>.*)$', 'django.views.static.serve',
+                               {'document_root': os.path.join(st.BASE_DIR, 'uploads')}),
+                           url(r'^media/(?P<path>.*)$', 'django.views.static.serve',
+                               {'document_root': os.path.join(st.BASE_DIR, 'media')}),
+                           ) + urlpatterns

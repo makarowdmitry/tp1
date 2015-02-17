@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block scripts %}
+
+<!--<script src="/media/scripts/window_additional.js"></script>-->
+<script src="/media/scripts/index.js"></script>
+<script src="/media/scripts/subscribe.js"></script>
+<script src="/media/scripts/saved_tag.js"></script>
+<script src="/media/scripts/load_on_scroll.js"></script>
+{% endblock %}
+
+
+{% block content %}
+
+
+
+
+
+<div class="all-elements">
+
+
+{% include 'panel.html' %}
+
+    <div id="content" class="page-content">
+    <div class="background-window"></div>
+    
+        <div class="page-header">
+            <a href="#" class="deploy-sidebar"></a>
+            <div class="logo-top"><img src="/media/images/misc/logo.png"/></div>            
+        </div>
+        <div class="content-all">
+           
+{% block articles %}
+
+{% endblock %}
+        </div>
+
+    </div>                 
+</div>
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

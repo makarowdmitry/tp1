@@ -1,0 +1,27 @@
+{% extends "account/base.html" %}
+
+{% load url from future %}
+{% load i18n %}
+
+{% block head_title %}{% trans "Sign Out" %}{% endblock %}
+
+{% block content %}
+
+<div class="all-elements">
+    <div id="content" class="page-content">
+    	<div class="content-all">
+ 
+
+<p style="text-align:center; margin-top: 20%;"> {% trans 'Are you sure you want to sign out?' %}</p>
+
+<form method="post" action="{% url 'account_logout' %}" >
+  
+  <button type="submit" class="button-general" style="margin: 0 auto">прол</button>
+</form>
+</div>
+</div>
+</div>
+
+
+
+{% endblock %}

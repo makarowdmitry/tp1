@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+
+{% block scripts %}
+{{ block.super }}
+<script src="/media/scripts/jquery.form.js"></script>
+<script src="/media/scripts/jquery.cookie.js"></script>
+<script src="/media/scripts/image_update.js"></script>
+
+{% endblock %}
+
+{% block content %}
+<div class="all-elements">
+{% include 'panel.html' %}
+
+    <div id="content" class="page-content">
+    <div class="background-page"></div>
+    	<div class="page-header">
+        	<a href="#" class="deploy-sidebar"></a>
+            <div class="logo-top"><img src="/media/images/misc/logo.png"/></div>            
+        </div>
+        <div class="content-all">
+            <div class="settings-section-general">
+                <p class="title">НАСТРОЙКИ ПРОФИЛЯ</p>
+                <p class="field-setting">{{ user.username }}</p>
+                <p class="field-setting">{{ user.email }}</p>
+                <div class="add-user-photo" id="image_update_block">
+                    {% if profile.image %}
+                        <img src="{{ profile.image.url }}">
+                    {% endif %}
+                    <div class="button-general">изменить фото</div>
+                    <form class="add-user-photo-form" enctype="multipart/form-data" method="post" id="image_update_form" action="{% url "update_image" profile.id %}">
+                        {% csrf_token %}
+                        {{ image_form.image }}
+                    </form>
+                </div>
+                <p class="field-setting">{{ profile.phone }}</p>
+                <p class="field-setting"><span>пол:&nbsp;&nbsp;</span>{% if profile.sex == 1 %}Мужчина{% else %}Женщина{% endif %}</p>
+                <a href="/sedit/" class="setting-button button-general">Изменить данные и пароль</a>
+            </div>
+             <!--<div class="settings-section-general">
+                <p class="title">EMAIL УВЕДОМЛЕНИЯ</p>
+
+                <div class="toggle-3">
+                        <a href="#" class="deploy-toggle-3">Получать письма<em><strong></strong></em></a>
+                        <div class="toggle-content">
+                            <p>
+                                Когда пользователи, на которых вы подписались добавляют новые фотографии и метки.  
+                            </p>
+                            <p>Отправлять эти письма</p>
+                                <a href="#" class="checkbox radio-one radio-one-checked" type="radio">Сразу после добавления</a>
+                                <a href="#" class="checkbox radio-one" type="radio">Один раз в день, не более</a>
+                        </div>
+                    </div>                
+            </div>-->
+
+        
+            
+            <div class="fotter-yes"></div>  
+        </div>
+              
+    </div>                 
+</div>
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

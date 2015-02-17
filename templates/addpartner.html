@@ -1,0 +1,194 @@
+{% extends 'base.html' %}
+
+{% block scripts %}
+
+<script src="/media/scripts/addpartner.js"></script>
+
+{% endblock %}
+{% block content %}
+
+
+
+<div class="windiw-info-block delete-window">
+    <p class="text-for-window"></p>
+    <div class="button-additional bt-no">нет</div>
+    <div class="button-general bt-yes delete-yes">да</div>
+    <input class="what-do" type="hidden" name="" value=""/>
+</div>
+
+
+<div class="windiw-info-block processing">    
+    <p>Отправлено на обработку</p>
+    <p class="text-for-window more-tr processing">
+        Фотографии отправлены на обработку.<br>
+        Teleport определит где можуно купить отмеченные вещи.<br><br>
+
+
+        Затем отправит вам на <b>{{ user.email }}</b> ссылку для публикции
+
+
+
+    </p>
+    <a href="/" class="button-general bt-ok">ok</a>
+</div>
+
+
+<div class="windiw-info-block add-brandname">
+    <label>Название бренда</label>
+    <input type="text" value="" name="brand_name" />
+    <div class="button-general bt-yes bt-yes-save">сохранить</div>
+    <div class="button-additional bt-no bt-no-mark">отмена</div>
+    <input type="hidden" value="" />
+</div>
+
+
+<div class="windiw-info-block change-brandname">
+    <label>Название бренда</label>
+    <input type="text"/>
+    <div class="button-general bt-yes bt-yes-save">сохранить</div>
+    <div class="button-additional bt-no bt-no-change-mark">отмена</div>
+    <div class="menu-item-block delete-bt-color yes-delete-mark">               
+        <svg class="menu-item-block-svg" viewBox="0 0 24 24">
+            <use xlink:href="#delete" ></use>
+        </svg>
+    </div>
+    <input type="hidden" value="" />
+</div>
+
+
+
+<div class="content-block">
+<p class="save-ok">Сохранено</p>
+
+   
+
+<div class="bt-check add-partner">Фотографии из видео</div>
+
+<div class="settings-input js-settings-input add-partner video">
+    <label>Название</label>
+    <input type="text" value="{{ item.name }}" name="name_item" class="change_info_item1"/>
+
+    <label>Ссылка на видео</label>
+    <input type="text" value="{{ item.urlback }}" name="urlback_item" class="change_info_item2"/>
+    <input type="hidden" value="{{ item.id }}" name="id_item"/>
+</div>
+
+ 
+
+<article id="{{ item.id }}" class="moderator-page"> 
+    {% for photo in item.get_photos %}
+    {% if photo.status == 1 %}
+
+        <div class="photo-block photo{{ photo.id }}" >
+            <div class="photo-left-block">
+                <div class="tag-with-block moderator-page">
+                {% for tag in photo.get_tags %}
+                                                            
+
+                     <div class="tag-star-block js-mark-brand tag{{ tag.id }}" style="top:{{ tag.y_position }}; left:{{ tag.x_position }};" id="{{ tag.id }}" >
+                        <svg class="tag-star" viewBox="0 0 24 24">
+                            <use xlink:href="#star-mark"></use>
+                        </svg>
+                                             
+                    </div>   
+                {% endfor%}  
+                    
+                    <img id="img{{ photo.id }}" src="/uploads/{{ photo.image }}">
+                {% if photo.get_tags.count == 0 %}
+                    <div class="block-help-click">Нажмите на фотографию, чтобы добавить метку</div>
+                {% endif %}
+
+                </div>              
+            </div>
+
+                        
+        </div>
+        <div class="panel-block moderator-page photo{{ photo.id }}">
+            
+            <div class="menu-item-block delete-bt-color js-button-delete">               
+                <svg class="menu-item-block-svg" viewBox="0 0 24 24">
+                    <use xlink:href="#delete" ></use>
+                </svg>
+            </div>
+            <input type="hidden" name="what_delete" value="{{ photo.id }}photo" />
+            <div class="photo-item-block">
+            <p class="text-on-button">изменить фото</p>
+                <svg class="photo-item-block-svg" viewBox="0 0 24 24">
+                    <use xlink:href="#change-photo" ></use>
+                </svg>
+                <form class="change-photo-content" enctype="multipart/form-data" method="post" action="/change_photo/">
+                {{ form.image }}
+                <input type="hidden" value="{{ photo.id }}" name="id_photo"  />
+                </form>
+
+            </div>
+
+        </div>
+        
+        
+
+         {% endif %}
+         {% endfor %}
+
+        
+
+        
+        
+        
+    </article>
+
+     
+
+
+</div>
+
+
+
+<div class="footer"></div>
+<div class="bt-moderation-block-general">
+    <div class="bt-moderation-block">
+        <a href="/" class="button-additional">Назад</a>
+        <div class="button-general add-photo-bt add-partner">Добавить фото
+            <form class="add-content-button-page-add add-partner" enctype="multipart/form-data" method="post" id="image_upload_form" action="/add_photo_more{{ item.id }}/">
+                {% csrf_token %}
+                {{ form1.image }}
+            </form>
+        </div>
+
+
+         <div class="button-general bt-moderation js-public-yes-no">На обработку</div>
+
+   
+
+    
+    
+        
+    </div> 
+</div>
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

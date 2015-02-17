@@ -1,0 +1,131 @@
+{% extends "account/base.html" %}
+
+{% load url from future %}
+{% load i18n %}
+{% load widget_tweaks %}
+
+{% block head_title %}{% trans "Signup" %}{% endblock %}
+
+
+{% block content %}
+
+<div class="windiw-info-block processing rules">    
+    <p>Отправлено на обработку</p>
+    <p class="text-for-window more-tr processing">
+        Фотографии отправлены на обработку.<br>
+        Teleport определит где можуно купить отмеченные вещи.<br><br>
+
+
+        Затем отправит вам на <b>{{ user.email }}</b> ссылку для публикции
+
+
+
+    </p>
+    <a href="#" class="button-general bt-ok-rules">ok</a>
+</div>
+
+
+<div class="background-index">
+<div class="background-index-center">
+	
+
+
+<div class="background-index-right page-block-left-partner">
+<div class="content-block">
+
+<p class="title-block">Подайте заявку на подключение <br> в качестве партнера</p>
+<div class="settings-input">
+	
+	
+
+
+	<label>Ссылка на вашу страницу в любой социальной сети, либо сайт*</label>
+	<input type="text" placeholder="http://"/>
+
+	<label>Контактный телефон*</label>
+	<input type="text" placeholder="+7 (910) 123 45 67" />
+
+	<label>Email*</label>
+	<input type="text" placeholder="example@gmail.com"/>
+
+	
+	
+	
+	
+	
+	
+
+	
+
+	</div>
+	</div>
+</div>
+
+<div class="background-index-right">
+<div class="content-block">
+
+
+<div class="settings-input">
+	
+	
+
+
+
+	<label>Имя*</label>
+	<input type="text" placeholder="Введите имя" />
+
+	<label>Где узнали о Teleport?</label>
+	<select>
+	    <option ></option>
+	    <option >Рассказали знакомые</option>
+	    <option >Вы сами связались с нами</option>
+	    <option disabled>Увидели в</option>
+		<option >Vk.com</option>
+		<option >Youtube</option>
+		<option >Facebook</option>
+		<option >Odnoklassniki</option>
+		<option >Instagram</option>
+		<option >Другое</option>
+	</select>
+	
+	<div class="bt-settings">Подать заявку</div>
+	
+	<p class="text-agreement">Подавая заявку вы соглашаетесь на создание аккаунта, тем самым принимаете <a href="#" class="goods-rules">Условия предоставления услуг</a> и <a href="#" class="politic-rules">Политику конфиденциальности</a> Teleport. </p>
+	
+	
+
+	
+
+	</div>
+	</div>
+</div>
+
+
+
+
+<div class ="about-teleport ">
+	<p class="title-block index-page">Текст для партнров</p>
+	<p class="phone-block">
+		Teleport это быстрый способ купить любую вещь из фотографии или видео.
+Нравятся часы героя из фильма?  - пару секунд и вы узнаете бренд, цену и сможете их купить.
+Понравились джинсы из клипа? Шарф на фотографии instagram или vk? - за два клика вы узнаете все о них и также сможете приобрести.<br><br>
+
+
+
+
+	</p>
+	<p class="last-about">Получайте то что вам нравится прямо во время просмотра видео и фотографий</p>
+
+
+</div>
+<div class="applink">
+	<a href="/accounts/signup/">О Teleport</a>
+</div>
+
+</div>
+</div>
+
+
+
+
+{% endblock %}

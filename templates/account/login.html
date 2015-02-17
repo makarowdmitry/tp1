@@ -1,0 +1,119 @@
+{% extends "account/base.html" %}
+
+{% load i18n %}
+{% load account %}
+{% load widget_tweaks %}
+{% load url from future %}
+
+{% block head_title %}{% trans "Sign In" %}{% endblock %}
+
+{% block scripts %}
+<!--<script src="/media/scripts/login.js"></script>-->
+{% endblock %}
+
+{% block content %}
+
+<div class="background-index">
+<div class="background-index-center">
+    <div class="background-index-left"></div>
+    <div class="background-index-right">
+        <div class="content-block">
+
+<p class="title-block">Войдите через</p>
+<div class="settings-input">
+    {% if socialaccount.providers  %}
+
+    {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+
+    {% include "socialaccount/snippets/login_extra.html" %}
+
+    {% endif %}
+
+    <div class="social-bt">
+        <div class="social-bt1 facebook-bt">
+            
+            <svg class="menu-item-block-svg icon-social-bt" viewBox="0 0 24 24">
+                <use xlink:href="#facebook-icon"></use>
+            </svg> 
+            <div class="text-social-bt"></div>
+
+        </div>
+        
+        <div class="social-bt1 google-bt">
+            
+            <svg class="menu-item-block-svg icon-social-bt" viewBox="0 0 24 24">
+                <use xlink:href="#google-icon"></use>
+            </svg> 
+            <div class="text-social-bt"></div>
+
+        </div>
+        <div class="social-bt1 vk-bt">
+            
+            <svg class="menu-item-block-svg icon-social-bt" viewBox="0 0 24 24">
+                <use xlink:href="#vk-icon"></use>
+            </svg>
+            <div class="text-social-bt"></div>
+
+        </div>
+    </div>
+
+    <form action="{% url 'account_login' %}" method="POST" >
+         {% csrf_token %}
+            {% if redirect_field_value %}
+                <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+            {% endif %}
+
+            {% if login_error %}
+                <p class="error-text">{{ login_error }}</p> 
+            {% endif %}
+
+
+                                
+
+
+
+    <label>Email</label>
+    {{ form.login|attr:"id:email" }}
+    {{ form.login.errors }}
+
+
+    <label>Пароль</label>
+    {{ form.password|attr:"id:password" }}
+    {{ form.password.errors }}
+    
+    
+    <input class="bt-login-register" type="submit"  value="войти" />
+    <p class="text-with-button"><a href="{{ signup_url }}" >Регистрация</a></p>
+    <p class="text-pre-button"><a href="#" target="_blank">Забыли пароль?</a></p>
+    
+    </form>
+
+    
+
+    </div>    
+    </div>
+
+    </div>
+<div class ="about-teleport ">
+    <p class="title-block index-page">Покупайте вещи, аксессуары  из видео и фотографий</p>
+    <p class="phone-block">
+        Teleport это быстрый способ купить любую вещь из фотографии или видео.
+Нравятся часы героя из фильма?  - пару секунд и вы узнаете бренд, цену и сможете их купить.
+Понравились джинсы из клипа? Шарф на фотографии instagram или vk? - за два клика вы узнаете все о них и также сможете приобрести.<br><br>
+
+
+
+
+    </p>
+    <p class="last-about">Получайте то что вам нравится прямо во время просмотра видео и фотографий</p>
+
+
+</div>
+<div class="applink">
+    <a href="/partner_signup/">Регистрация для партнеров</a>
+</div>
+
+</div>
+</div>
+
+{% endblock %}

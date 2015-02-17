@@ -1,0 +1,332 @@
+{% extends 'base.html' %}
+
+{% block scripts %}
+
+<script src="/media/scripts/add.js"></script>
+
+{% endblock %}
+{% block content %}
+
+
+
+<div class="windiw-info-block">
+    <p class="text-for-window"></p>
+    <div class="button-additional bt-no">нет</div>
+    <div class="button-general bt-yes">да</div>
+    <input class="what-do" type="hidden" name="" value=""/>
+</div>
+
+
+<div class="content-block">
+<p class="save-ok">Сохранено</p>
+
+   
+
+
+
+<div class="settings-input js-settings-input">
+    <label>Присвоить пользователю</label>
+
+    <select id="js-username_select" class="change_info_item3">
+    <option value = "{{ item.user }}" selected >{{ item.user }}</option>
+    {% for partner in all_partners %}
+    {% if partner.username != '' %}
+    <option value="{{partner.username}}">{{partner.username}}</option>
+    {% endif %}
+    {% endfor %}
+
+    </select>
+    
+    
+
+    <label>Название</label>
+    <input type="text" value="{{ item.name }}" name="name_item" class="change_info_item1"/>
+
+    <label>Ссылка на видео</label>
+    <input type="text" value="{{ item.urlback }}" name="urlback_item" class="change_info_item2"/>
+    <input type="hidden" value="{{ item.id }}" name="id_item"/>
+    
+
+</div>
+
+ 
+
+<article id="{{ item.id }}" class="moderator-page"> 
+    {% for photo in item.get_photos %}
+    {% if photo.status == 1 %}
+    <div class="border-for-block-content photo{{ photo.id }}"> 
+        <div class="photo-block">
+            <div class="photo-left-block">
+                <div class="tag-with-block moderator-page">
+                {% for tag in photo.get_tags %}
+                                                            
+
+                     <div class="tag-star-block js-mark-brand tag{{ tag.id }}" style="top:{{ tag.y_position }}; left:{{ tag.x_position }};" id="{{ tag.id }}" ><p>{{  forloop.revcounter }}</p>
+                        <svg class="tag-star" viewBox="0 0 24 24">
+                            <use xlink:href="#star-mark-count"></use>
+                        </svg>
+                                             
+                    </div>   
+                {% endfor%}  
+                    
+                    <img id="img{{ photo.id }}" src="/uploads/{{ photo.image }}">
+                {% if photo.get_tags.count == 0 %}
+                    <div class="block-help-click">Нажмите на фотографию, чтобы добавить метку</div>
+                {% endif %}
+
+                </div>              
+            </div>
+
+                        
+        </div>
+        <div class="panel-block moderator-page">
+            
+            <div class="menu-item-block delete-bt-color js-button-delete">               
+                <svg class="menu-item-block-svg" viewBox="0 0 24 24">
+                    <use xlink:href="#delete" ></use>
+                </svg>
+            </div>
+            <input type="hidden" name="what_delete" value="{{ photo.id }}photo" />
+            <div class="photo-item-block">
+            <p class="text-on-button">изменить фото</p>
+                <svg class="photo-item-block-svg" viewBox="0 0 24 24">
+                    <use xlink:href="#change-photo" ></use>
+                </svg>
+                <form class="change-photo-content" enctype="multipart/form-data" method="post" action="/change_photo/">
+                {{ form.image }}
+                <input type="hidden" value="{{ photo.id }}" name="id_photo"  />
+                </form>
+
+            </div>
+
+            <div class="slide-video">
+                     <form class="add-additional-photo-content" enctype="multipart/form-data" method="post" action="/add_additional_photo{{ item.id }}_{{ photo.id }}/">
+                     {% csrf_token %}
+                    {{ form1.image }}
+                    <input type="hidden" value="{{ photo.id }}" name="id_photo"/>
+                    </form>
+
+                <svg class="slide-video-svg" viewBox="0 0 24 24">
+                    <use xlink:href="#add-photo" ></use>
+                </svg>
+
+            </div>
+        </div>
+        <div class="tag-block-edit-general photo{{ photo.id }}">
+       {% for tag in photo.get_tags %}
+             
+        <div class="tag-block-edit tag{{ tag.id }}">
+            <div class="tag-block-edit-left">
+                <a href="{{ tag.url }}" class="tag-star-block" target="_blank" >
+                <p>{{  forloop.revcounter }}</p>
+                    <svg class="tag-star" viewBox="0 0 24 24">
+                        <use xlink:href="#star-mark-count"></use>
+                    </svg>                          
+                </a>                
+            </div>
+            <div class="tag-block-edit-right">
+                <input type="hidden" name="tag_id" value="{{ tag.id }}"/>
+                <label>Название бренда</label>
+                <input type="text" value="{{ tag.get_brandname }}" name="brand_name" />
+                <label>Ссылка</label>
+                <input type="text" value="{{ tag.url_raw }}" name="url_tag"/>
+                <div class="bt-radio-block">
+                {% if tag.z_position == 1 %}
+                    <div class="bt-check checked">Product placement</div>
+                {% elif tag.z_position == 0 %}
+                    <div class="bt-check">Product placement</div>
+                {% endif %}
+                
+                </div>
+                <div class="menu-item-block delete-bt-color tag-block-edit-right-delete js-button-delete">               
+                    <svg class="menu-item-block-svg" viewBox="0 0 24 24">
+                        <use xlink:href="#delete" ></use>
+                    </svg>
+                </div>
+                <input type="hidden" name="what_delete" value="{{ tag.id }}tag" />
+
+            </div>
+        </div>
+         {% endfor %}
+
+        </div>
+         
+
+        {% if photo.get_related != 0 %}
+
+            {% for related in photo.get_related %}
+            {% for photo_r in related.get_photos %}
+
+
+        <div class="photo-block photo{{ photo_r.id }}">
+            
+
+            <div class="photo-left-block">
+                <div class="tag-with-block moderator-page">
+                {% for tag in photo_r.get_tags %}
+                                                            
+
+                     <div class="tag-star-block js-mark-brand tag{{ tag.id }}" style="top:{{ tag.y_position }}; left:{{ tag.x_position }};" id="{{ tag.id }}" ><p>{{  forloop.revcounter }}</p>
+                        <svg class="tag-star" viewBox="0 0 24 24">
+                            <use xlink:href="#star-mark-count"></use>
+                        </svg>
+                                             
+                    </div>   
+                {% endfor%}  
+                    
+                    <img id="img{{ photo_r.id }}" src="/uploads/{{ photo_r.image }}">
+                {% if photo_r.get_tags.count == 0 %}
+                    <div class="block-help-click">Нажмите на фотографию, чтобы добавить метку</div>
+                {% endif %}
+
+                </div>              
+            </div>
+
+                        
+        </div>
+        <div class="panel-block photo{{ photo_r.id }} moderator-page">
+            
+            <div class="menu-item-block delete-bt-color js-button-delete">               
+                <svg class="menu-item-block-svg" viewBox="0 0 24 24">
+                    <use xlink:href="#delete" ></use>
+                </svg>
+            </div>
+            <input type="hidden" name="what_delete" value="{{ photo_r.id }}photo" />
+            <div class="photo-item-block">
+            <p class="text-on-button">изменить фото</p>
+                <svg class="photo-item-block-svg" viewBox="0 0 24 24">
+                    <use xlink:href="#change-photo" ></use>
+                </svg>
+                <form class="change-photo-content" enctype="multipart/form-data" method="post" action="/change_photo/">
+                {{ form.image }}
+                <input type="hidden" value="{{ photo_r.id }}" name="id_photo" />
+                </form>
+
+            </div>
+
+    
+        </div>
+
+        <div class="tag-block-edit-general photo{{ photo_r.id }}">
+       {% for tag in photo_r.get_tags %}
+        <div class="tag-block-edit tag{{ tag.id }}">
+            <div class="tag-block-edit-left">
+                <a href="{{ tag.url }}" class="tag-star-block" target="_blank" >
+                <p>{{  forloop.revcounter }}</p>
+                    <svg class="tag-star" viewBox="0 0 24 24">
+                        <use xlink:href="#star-mark-count"></use>
+                    </svg>                          
+                </a>                
+            </div>
+            <div class="tag-block-edit-right">
+                <input type="hidden" name="tag_id" value="{{ tag.id }}"/>
+                
+                <label>Ссылка</label>
+                <input type="text" value="{{ tag.url_raw }}" name="url_tag"/>
+
+
+                <div class="menu-item-block delete-bt-color tag-block-edit-right-delete js-button-delete">               
+                    <svg class="menu-item-block-svg" viewBox="0 0 24 24">
+                        <use xlink:href="#delete" ></use>
+                    </svg>
+                </div>
+                <input type="hidden" name="what_delete" value="{{ tag.id }}tag" />
+
+            </div>
+        </div>
+         {% endfor %}
+        </div>
+
+            {% endfor %}
+            {% endfor %}
+
+        {% endif %}
+
+        </div>
+
+         {% endif %}
+         {% endfor %}
+
+        
+
+        
+        
+        
+    </article>
+
+
+
+
+<!--
+
+<div class="add-user-photo" id="image_update_block">
+        {% if profile.image %}
+        <img src="{{ profile.image.url }}">
+        {% endif %}
+        <div class="button-general">изменить фото</div>
+        <form class="add-user-photo-form" enctype="multipart/form-data" method="post" id="image_update_form" action="{% url "update_image" profile.id %}">
+            {% csrf_token %}
+            {{ image_form.image }}
+        </form>
+    </div>
+
+-->
+
+
+     
+
+
+</div>
+
+
+
+<div class="footer"></div>
+<div class="bt-moderation-block-general">
+    <div class="bt-moderation-block">
+        <div class="menu-item-block delete-bt-color js-button-delete">               
+                <svg class="menu-item-block-svg" viewBox="0 0 24 24">
+                    <use xlink:href="#delete" ></use>
+                </svg>
+        </div>
+        <input type="hidden" name="what_delete" value="{{ item.id }}item" />
+        <div class="button-general add-photo-bt">Добавить еще фото
+            <form class="add-content-button-page-add" enctype="multipart/form-data" method="post" id="image_upload_form" action="/add_photo_more{{ item.id }}/">
+                {% csrf_token %}
+                {{ form1.image }}
+            </form>
+        </div>
+
+        {% if item.public == 0 %}
+        <div class="button-general bt-moderation js-public-yes-no">Опубликовать</div> 
+        {% else %}
+        <div class="button-general bt-moderation bt-no-public js-public-yes-no">Снять с публикации</div> 
+        {% endif %}
+    </div> 
+</div>
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

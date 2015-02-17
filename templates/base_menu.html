@@ -1,0 +1,63 @@
+<div id="sidebar" class="page-sidebar">
+    <div class="page-sidebar-scroll">
+      {% if username %}
+        <div class="sidebar-section">
+            <img src="/media/img/myphoto.jpg"/>
+            <p>{{ username }}</p>
+            <a href="#" class="sidebar-close"></a>
+        </div>
+                    
+        <div class="navigation-items">
+            <div class="nav-item">
+                <form method="post" action="/add_photo/" enctype="multipart/form-data" >
+                
+                {{ form.as_p }}
+                    <input type="submit" value="Добавить">
+                </form>
+                <a class="addphoto-nav">Добавить фото<em class="unselected-nav"></em></a>
+            </div> 
+            <div class="nav-item">
+                <a href="subscriptions.html" class="subscriptions-nav">ПОДПИСКИ<em class="selected-nav"></em></a>
+            </div> 
+            <div class="nav-item">
+                <a href="saved.html" class="star-nav">СОХРАНЕННО<em class="unselected-nav"></em></a>
+            </div> 
+             <div class="nav-item">
+                <a href="saved.html" class="business-nav">Бизнес<em class="unselected-nav"></em></a>
+            </div> 
+            <div class="nav-item">
+                <a href="/settings/" class="features-nav">НАСТРОЙКИ<em class="unselected-nav"></em></a>
+            </div> 
+            <div class="nav-item">
+                <a href="/about/" class="help-nav">ПОМОЩЬ<em class="unselected-nav"></em></a>
+            </div>
+            <div class="nav-item nav-item-log">
+                <a href="{% url "account_logout" %}" class="logout-nav">ВЫХОД</a>
+            </div>                 
+        </div>
+
+        {% else %}
+
+        <div class="sidebar-section">
+                
+                <a href="#" class="sidebar-close"></a>
+            </div>
+                        
+            <div class="navigation-items">
+                <div class="nav-item">
+                    <a href="{% url "account_signup" %}" class="joinup-nav" >РЕГИСТРАЦИЯ<em class="selected-nav"></em></a>
+                </div> 
+                <div class="nav-item">
+                    <a href="{% url "account_login" %}" class="logout-nav">ВОЙТИ<em class="unselected-nav"></em></a>
+                </div> 
+                <div class="nav-item nav-item-log">
+                    <a href="index.html" class="about-nav">О  TELEPORT<em class="unselected-nav"></em></a>
+                </div>                 
+            </div>  
+
+        {% endif %}
+
+
+
+    </div>
+</div>

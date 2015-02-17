@@ -1,0 +1,118 @@
+<div class="window-panel-general js-menu-general">
+    <div class="window-panel-general-block">
+        <div class="menu-panel-more">
+
+
+        {% if user.username %}
+
+
+            {% if group == 'bigpartner' %}
+                <a href="/analytics">Аналитика Big</a>
+            {% endif %}
+
+             <a href="/sedit/">Настройки</a>
+             <a href="/faq">FAQ</a>
+            <a>ВЫХОД
+            <form method="post"  class="button-signup" action="{% url 'account_logout' %}" >
+  
+  <button type="submit" ></button>
+</form>
+            </a>
+             
+
+        {% else %}
+        <a href="{% url "account_login" %}">Войти</a>
+        <a href="{% url "account_signup" %}">Регистрация</a>
+        <a href="/faq">FAQ</a>
+        {% endif %}
+            
+        
+                         
+        </div>
+
+    </div>
+</div>
+<div class="panel-general">
+
+    <div class="panel-general-buttons">
+
+    {% if group == 'moderator' %}
+    <a href="#" class="panel-general-button2" id="button-add-photo-select">
+        <svg class="menu-icon-svg" viewBox="0 0 24 24">
+            <use xlink:href="#addcontent-icon-menu" ></use>
+        </svg>
+
+    <form class="add-content-button" enctype="multipart/form-data" method="post" id="image_upload_form" action="/add_photo/">
+    {% csrf_token %}
+    {{ form.image }}</form>
+    </a>
+
+
+    
+    
+    <a href="/generation_links" class="panel-general-button3">
+        <svg class="menu-icon-svg" viewBox="0 0 24 24">
+            <use xlink:href="#addstar-icon-menu" ></use>
+        </svg>
+    </a>
+
+    <a href="/" class="panel-general-button3">
+        <svg class="menu-icon-svg" viewBox="0 0 24 24">
+            <use xlink:href="#search-icon" ></use>
+        </svg>
+    </a>
+
+     {% elif group == 'partner' %}
+     <a href="/{{user.username}}" class="panel-general-button1"></a>
+     <a href="/analytics" class="panel-general-button3">
+            <svg class="menu-icon-svg" viewBox="0 0 24 24">
+            <use xlink:href="#analytics-icon-menu" ></use>
+            </svg>
+        </a>
+      <a href="#" class="panel-general-button2" id="button-add-photo-select">
+        <svg class="menu-icon-svg" viewBox="0 0 24 24">
+            <use xlink:href="#addcontent-icon-menu" ></use>
+        </svg>
+
+    <form class="add-content-button" enctype="multipart/form-data" method="post" id="image_upload_form" action="/add_photo/">
+    {% csrf_token %}
+    {{ form.image }}</form>
+    </a>
+        
+         
+
+
+    
+
+
+    {% else %}
+   
+    <a href="/subscription/" class="panel-general-button1">
+        
+    </a>
+    <a href="/saved_tag/" class="panel-general-button2">
+        <svg class="menu-icon-svg" viewBox="0 0 24 24">
+            <use xlink:href="#star-icon" ></use>
+        </svg>
+    </a>
+    <a href="/" class="panel-general-button3">
+        <svg class="menu-icon-svg" viewBox="0 0 24 24">
+            <use xlink:href="#search-icon" ></use>
+        </svg>
+    </a>
+    {% endif %}
+
+    
+    <a href="#" class="panel-general-button4 js-open-close-menu-general">
+        <svg class="menu-icon-svg" viewBox="0 0 24 24">
+            <use xlink:href="#menu-more" ></use>
+        </svg>
+    </a>
+    </div>
+</div>
+
+
+
+
+
+

@@ -1,0 +1,469 @@
+{% extends is_ajax|yesno:"ajax_more_articles_username.html,index.html" %}
+
+{% block articles %}
+
+<!-- Страница Юзернейм все item user -->
+            
+<div class="user-info-general style-userpage">
+    {% if profile_user_this.image != "" %}
+        <a href="/{{ user_this.username }}"><img src="/uploads/{{ profile_user_this.image }}"/></a>
+    {% endif %}
+    <div class="user-info-general-text">
+        <p>{{ user_this.username }}
+        
+        {% if profile_user_this.description != "" %}<br/>
+
+        <span>
+           {{ profile_user_this.description }}
+        </span>
+
+        {% endif %}
+
+        </p>
+        <a href="{{ profile_user_this.link }}" target="_blank">{{ profile_user_this.link }}</a>
+    </div>
+
+    <div class="user-info-general-subs">
+    <!--Количество подписчиков-->
+
+    {% if count_subs > 0 %}
+            <p class="js-count-subs-this">{{ count_subs }}</p>
+    {% else %}
+        <p class="js-count-subs-this" style="color:#fff">{{ count_subs }}</p>
+    {% endif %}
+
+        
+
+        {% if not user.username %}
+            <a href="{% url "account_login" %}" class="button-general">подписаться</a>                              
+        {% else %}
+
+
+
+            {% if user_this.id in subscription %}
+            <a href="#" class="js-subscribe-but-{{ user_this.id }} button-general" style="background:#6b6b6b;">Отписаться</a>
+            <input type="hidden" value="{{ user_this.id }}" />
+
+            {% elif user.id == user_this.id %}
+
+                <a  class="button-general">Подписчиков</a>
+            {% else %}
+
+            <a href="#" class="js-subscribe-but-{{ user_this.id }} button-general" >Подписаться</a>
+            <input type="hidden" value="{{ user_this.id }}" />
+            {% endif %}
+
+        {% endif %}    
+
+        
+    </div>
+</div>
+
+
+
+
+{% if item_first.get_tags_with_url > 0  %}
+    
+    <article id="{{ item_first.id }}">
+
+    <!--Info user-->
+    {% if item_first.name %}
+        <div class="userinfo-block">
+            <a class="userinfo-block-link">              
+
+                {% if item_first.name %}
+                    <div class="username-block only-video"><span>{{ item_first.name }}</span></div>
+                {% endif %}
+                
+                
+                
+            </a>
+
+            {% if item_first.urlback and item_first.urlback != '11' %}
+                <a class="link-video" href="{{ item_first.urlback }}" target="_blank">             
+                    <svg style="display: block;" viewBox="0 0 24 24">
+                        <use xlink:href="#play-circle-fill" ></use>
+                    </svg>
+                </a>
+            {% endif %}            
+        </div>
+        {% endif %}  
+
+
+         <!--Photoblock-->
+
+        {% for photo in item_first.get_photos_general %}
+        {% if photo.get_tags_with_link_additional != 0 or photo.get_tags_with_link.count != 0 %}
+
+        <div class="photo-block">
+            <div class="photo-left-block">
+
+                {% if photo.get_tags_with_link.count != 0 and photo.status == 1 %}
+                
+                    <div class="tag-with-block">
+
+                        {% for tag in photo.get_tags %}
+                            {% if 'http' in tag.url %}
+                                {% if tag.brand_name != ''  and tag.z_position == 1  %}
+                                  <a href="/buy{{ tag.id }}_{{ item_first.id }}"  class="tag-star-block" target="_blank" style="top:{{ tag.y_position }}; left:{{ tag.x_position }}; z-index:9999;" id="{{ tag.id }}">
+                                    <svg class="tag-star" viewBox="0 0 24 24">
+                                        <use xlink:href="#star-mark"></use>
+                                    </svg>                          
+                                </a>
+                                <p class="js-panel-brandname">{{ tag.brand_name }}</p>
+
+                                {% else%}
+                                  <a href="/buy{{ tag.id }}_{{ item_first.id }}"  class="tag-star-block" target="_blank" style="top:{{ tag.y_position }}; left:{{ tag.x_position }}; z-index:999;" id="{{ tag.id }}">
+                                    <svg class="tag-star" viewBox="0 0 24 24">
+                                        <use xlink:href="#star-mark"></use>
+                                    </svg>                          
+                                </a>
+                                {% endif %}
+
+
+                            {% endif %}                           
+                        {% endfor %}
+
+                        <img src="/uploads/{{ photo.image }}" class="photo-for-tags-{{ photo.id }}" id="{{ photo.id }}">
+                    </div>
+
+                {% endif %}
+
+
+                {% if photo.get_related != 0 %}
+                    {% for related in photo.get_related %}
+                        {% for photo_r in related.get_photos %}
+
+                            {% if photo_r.get_tags_with_link.count != 0 %}
+
+                                        <div class="tag-with-block" style="display:none;" >
+                                        {% for tag in photo_r.get_tags %} 
+                                            {% if 'http' in tag.url %}
+
+                                              <a href="/buy{{ tag.id }}_{{ item_first.id }}"  class="tag-star-block js-for-color-change" target="_blank" style="top:{{ tag.y_position }}; left:{{ tag.x_position }}; z-index:999;" id="{{ tag.id }}">
+                                                    <svg class="tag-star" viewBox="0 0 24 24">
+                                                        <use xlink:href="#star-mark"></use>
+                                                    </svg>                          
+                                                </a>
+                                            {% endif %} 
+                                        {% endfor%}  
+                                            
+                                            <img id="img{{ photo_r.id }}" src="/uploads/{{ photo_r.image }}">
+
+                                        </div>
+
+                            {% endif %}
+
+
+                        {% endfor %}
+                    {% endfor %}
+                {% endif %}
+
+            </div>                        
+        </div>
+
+
+        <div class="panel-block">
+            <div class="menu-item-block js-open-close-window-more">             
+                <svg class="menu-item-block-svg" viewBox="0 0 24 24">
+                    <use xlink:href="#menu-more" ></use>
+                </svg>
+            </div>
+            
+            <div class="share-block js-share-get">
+            
+                <svg  class="share" viewBox="0 0 24 24">
+                    <use xlink:href="#menu-share" ></use>
+                </svg>
+           
+            
+            </div>
+<!--
+Если к отбражению менне одной фотографии с ссылками, скрывать кнопку с наборами
+
+-->
+            {% if photo.get_count_photo_with_link_additional > 0 and photo.get_tags_with_link.count > 0 or photo.get_count_photo_with_link_additional > 1 %}
+
+
+            <div class="sets-item-block">
+            <p class="text-on-button">Образы{{ item_first.get_count_photo_with_link_additional }}</p>
+                
+            </div>
+
+            {% endif %}
+
+             <div class="favorite-block js-like-get">
+            {% if user.id in photo.get_user_like_this_photo %}
+                <svg  class="favorite yes-like" viewBox="0 0 24 24">
+                    <use xlink:href="#favorite" ></use>
+                </svg>
+            {% else %}
+            <svg  class="favorite" viewBox="0 0 24 24">
+                    <use xlink:href="#favorite" ></use>
+                </svg>
+
+            {% endif %}
+            </div>
+
+            <p>
+             {% if  photo.get_like_count > 0  %}
+            {{photo.get_like_count}}
+            {% endif %}
+            </p>
+
+        </div>
+
+    {% endif %}
+    {% endfor %}    
+    <!--Photoblock end-->
+             <div class="window-menu-item-block js-window-more">
+                {% if group == 'moderator' %}
+                    <a href="/add/{{ item.id }}" class="button-general button-for-window">редактировать</a>
+                    <a href="#" class="button-general button-for-window js-link-copy">скопировать ссылку</a>
+                <div class="block-input-copy js-block-input-copy">
+                        <input type="text" class="input-link-copy js-input-link-copy" value="{{ item.url }}">
+                </div>
+                {% elif user.id == item.user_id %}
+                    <a href="/addpartner/{{ item.id }}" class="button-general button-for-window">Редактировать метки</a>
+                    <a href="#" class="button-general button-for-window js-link-copy">скопировать ссылку</a>
+                <div class="block-input-copy js-block-input-copy">
+                        <input type="text" class="input-link-copy js-input-link-copy" value="{{ item.url }}">
+                </div>
+
+
+                
+                {% else %}
+
+
+                <a href="#" class="button-general button-for-window js-link-copy">скопировать ссылку</a>
+                <div class="block-input-copy js-block-input-copy">
+                        <input type="text" class="input-link-copy js-input-link-copy" value="{{ item.url }}">
+                </div>
+                {% endif %}
+
+                    
+
+                
+                <a href="#" class="button-additional button-for-window no-border js-close-window-more">закрыть</a>
+            </div>
+    </article>           
+    {% endif %}
+
+
+
+
+
+
+{% for item in items %}
+{% if item.get_tags_with_url > 0  %}
+    
+    <article id="{{ item.id }}">
+
+    <!--Info user-->
+    {% if item.name %}
+        <div class="userinfo-block">
+            <a class="userinfo-block-link">              
+
+                {% if item.name %}
+                    <div class="username-block only-video"><span>{{ item.name }}</span></div>
+                {% endif %}
+                
+                
+                
+            </a>
+
+            {% if item.urlback and item.urlback != '11' %}
+                <a class="link-video" href="{{ item.urlback }}" target="_blank">             
+                    <svg style="display: block;" viewBox="0 0 24 24">
+                        <use xlink:href="#play-circle-fill" ></use>
+                    </svg>
+                </a>
+            {% endif %}            
+        </div>
+        {% endif %}  
+
+
+         <!--Photoblock-->
+
+        {% for photo in item.get_photos_general %}
+        {% if photo.get_tags_with_link_additional != 0 or photo.get_tags_with_link.count != 0 %}
+
+        <div class="photo-block">
+            <div class="photo-left-block">
+
+                {% if photo.get_tags_with_link.count != 0 and photo.status == 1 %}
+                
+                    <div class="tag-with-block">
+
+                        {% for tag in photo.get_tags %}
+                            {% if 'http' in tag.url %}
+                                {% if tag.brand_name != ''  and tag.z_position == 1  %}
+                                  <a href="/buy{{ tag.id }}_{{ item.id }}"  class="tag-star-block" target="_blank" style="top:{{ tag.y_position }}; left:{{ tag.x_position }}; z-index:9999;" id="{{ tag.id }}">
+                                    <svg class="tag-star" viewBox="0 0 24 24">
+                                        <use xlink:href="#star-mark"></use>
+                                    </svg>                          
+                                </a>
+                                <p class="js-panel-brandname">{{ tag.brand_name }}</p>
+
+                                {% else%}
+                                  <a href="/buy{{ tag.id }}_{{ item.id }}"  class="tag-star-block" target="_blank" style="top:{{ tag.y_position }}; left:{{ tag.x_position }}; z-index:999;" id="{{ tag.id }}">
+                                    <svg class="tag-star" viewBox="0 0 24 24">
+                                        <use xlink:href="#star-mark"></use>
+                                    </svg>                          
+                                </a>
+                                {% endif %}
+
+
+                            {% endif %}                           
+                        {% endfor %}
+
+                        <img src="/uploads/{{ photo.image }}" class="photo-for-tags-{{ photo.id }}" id="{{ photo.id }}">
+                    </div>
+
+                {% endif %}
+
+
+                {% if photo.get_related != 0 %}
+                    {% for related in photo.get_related %}
+                        {% for photo_r in related.get_photos %}
+
+                            {% if photo_r.get_tags_with_link.count != 0 %}
+
+                                        <div class="tag-with-block" style="display:none;">
+                                        {% for tag in photo_r.get_tags %} 
+                                            {% if 'http' in tag.url %}
+
+                                              <a href="/buy{{ tag.id }}_{{ item.id }}"  class="tag-star-block js-for-color-change" target="_blank" style="top:{{ tag.y_position }}; left:{{ tag.x_position }}; z-index:999;" id="{{ tag.id }}">
+                                                    <svg class="tag-star" viewBox="0 0 24 24">
+                                                        <use xlink:href="#star-mark"></use>
+                                                    </svg>                          
+                                                </a>
+                                            {% endif %} 
+                                        {% endfor%}  
+                                            
+                                            <img id="img{{ photo_r.id }}" src="/uploads/{{ photo_r.image }}">
+
+                                        </div>
+
+                            {% endif %}
+
+
+                        {% endfor %}
+                    {% endfor %}
+                {% endif %}
+
+            </div>                        
+        </div>
+
+
+        <div class="panel-block">
+            <div class="menu-item-block js-open-close-window-more">             
+                <svg class="menu-item-block-svg" viewBox="0 0 24 24">
+                    <use xlink:href="#menu-more" ></use>
+                </svg>
+            </div>
+             <div class="share-block js-share-get">
+            
+                <svg  class="share" viewBox="0 0 24 24">
+                    <use xlink:href="#menu-share" ></use>
+                </svg>
+           
+            
+            </div>
+<!--
+Если к отбражению менне одной фотографии с ссылками, скрывать кнопку с наборами
+
+-->
+            {% if photo.get_count_photo_with_link_additional > 0 and photo.get_tags_with_link.count > 0 or photo.get_count_photo_with_link_additional > 1 %}
+
+
+            <div class="sets-item-block">
+            <p class="text-on-button">Образы{{ item.get_count_photo_with_link_additional }}</p>
+                
+            </div>
+
+            {% endif %}
+
+            <div class="favorite-block js-like-get">
+            {% if user.id in photo.get_user_like_this_photo %}
+                <svg  class="favorite yes-like" viewBox="0 0 24 24">
+                    <use xlink:href="#favorite" ></use>
+                </svg>
+            {% else %}
+            <svg  class="favorite" viewBox="0 0 24 24">
+                    <use xlink:href="#favorite" ></use>
+                </svg>
+
+            {% endif %}
+            </div>
+
+            <p>
+             {% if  photo.get_like_count > 0  %}
+            {{photo.get_like_count}}
+            {% endif %}
+            </p>
+
+        </div>
+
+    {% endif %}
+    {% endfor %}    
+    <!--Photoblock end-->
+            <div class="window-menu-item-block js-window-more">
+                {% if group == 'moderator' %}
+                    <a href="/add/{{ item.id }}" class="button-general button-for-window">редактировать</a>
+                    <a href="#" class="button-general button-for-window js-link-copy">скопировать ссылку</a>
+                <div class="block-input-copy js-block-input-copy">
+                        <input type="text" class="input-link-copy js-input-link-copy" value="{{ item.url }}">
+                </div>
+                {% elif user.id == item.user_id %}
+                    <a href="/addpartner/{{ item.id }}" class="button-general button-for-window">Редактировать метки</a>
+                    <a href="#" class="button-general button-for-window js-link-copy">скопировать ссылку</a>
+                <div class="block-input-copy js-block-input-copy">
+                        <input type="text" class="input-link-copy js-input-link-copy" value="{{ item.url }}">
+                </div>
+
+
+                
+                {% else %}
+
+
+                <a href="#" class="button-general button-for-window js-link-copy">скопировать ссылку</a>
+                <div class="block-input-copy js-block-input-copy">
+                        <input type="text" class="input-link-copy js-input-link-copy" value="{{ item.url }}">
+                </div>
+                {% endif %}
+
+                    
+
+                
+                <a href="#" class="button-additional button-for-window no-border js-close-window-more">закрыть</a>
+            </div>
+    </article>           
+    {% endif %}
+
+
+    {% endfor %}
+
+
+    <div class="window-menu-item-block-share js-window-more-share">
+
+      <div data-share-size="40" data-like-text-enable="false" data-background-alpha="0.0" data-pid="1338699" data-mode="share" data-background-color="#ffffff" data-share-shape="rectangle" data-share-counter-size="12" data-icon-color="#ffffff" data-text-color="#000000" data-buttons-color="#161616" data-counter-background-color="#ffffff" data-share-counter-type="disable" data-orientation="horizontal" data-following-enable="false" data-sn-ids="vk.ok.fb.tw.gp" data-selection-enable="false" data-exclude-show-more="true" data-share-style="0" data-counter-background-alpha="1.0" data-top-button="false" class="uptolike-buttons"></div>
+          
+
+
+      </div>
+
+
+    {% if next_start_from < items_total %}
+
+                    <div class="place_for_next_page_username" id="place_for_next_page_username">
+                        <div id="load_next_page_username" class="loader-more" data-start_item="{{ next_start_from }}"><img src="/media/images/ui/loader-more.gif"/></div>
+                        <input type="hidden" value="{{ user_this.username }}"/>
+                    </div>
+        {% endif %}
+
+
+    
+
+
+{% endblock %}
