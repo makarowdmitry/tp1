@@ -84,7 +84,7 @@
     
     <input class="bt-login-register" type="submit"  value="войти" />
     <p class="text-with-button"><a href="{{ signup_url }}" >Регистрация</a></p>
-    <p class="text-pre-button"><a href="#" target="_blank">Забыли пароль?</a></p>
+    <p class="text-pre-button"><a href="{% url 'account_reset_password' %}" >{% trans "Забыли пароль?" %}</a></p>
     
     </form>
 

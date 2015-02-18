@@ -127,6 +127,7 @@ STATIC_URL = '/static/'
 
 
 EMAIL_HOST = 'email-smtp.eu-west-1.amazonaws.com'
+DEFAULT_FROM_EMAIL = 'noreply@teleport.ink'
 EMAIL_HOST_USER = 'AKIAJHXOKDVIIJIOHBGA'
 EMAIL_HOST_PASSWORD = 'AmS38L/HtvOH2IpYplONeY6VPKQVyzoSHGmlmYaxykNV'
 EMAIL_PORT = 587
