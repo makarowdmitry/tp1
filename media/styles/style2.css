@@ -2114,3 +2114,36 @@ ul.horizontal li {
 	padding: 1%;
 
 }
+
+/*Style page reset password*/
+
+.password_reset input {
+    width: 100px;
+
+}
+
+.background-index-right.reset-password {
+    margin: 30px auto 0 auto;
+    float: none;
+    display: block;
+    position: relative;
+    height: 100%;
+}
+
+.background-index-right.reset-password input {
+   width: 100%;
+}
+
+.background-index-right.reset-password .bt-login-register{
+   width: 105% !important;
+
+}
+
+.background-index-right.reset-password .text-pre-button {
+    margin-top: 10px !important;
+    text-align: center;
+}
+
+.background-index-right.reset-password.done {
+    height: 50%;
+}
