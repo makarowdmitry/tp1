@@ -2130,8 +2130,14 @@ ul.horizontal li {
     height: 100%;
 }
 
+.background-index-right.reset-password.done {
+
+    height: 140px;
+}
+
 .background-index-right.reset-password input {
    width: 100%;
+
 }
 
 .background-index-right.reset-password .bt-login-register{
@@ -2145,5 +2151,6 @@ ul.horizontal li {
 }
 
 .background-index-right.reset-password.done {
-    height: 50%;
+    position: relative;
 }
+
