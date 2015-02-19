@@ -31,12 +31,27 @@
 
 <div class="background-index">
 <div class="background-index-center">
-    <div class="background-index-left"></div>
+    <div class="background-index-left">
+         <p class="title-block">Регистрируйтесь</p>
+        <p class="green-style lower">И вы узнаете где купить:</p>
+
+            <p class="about-g">- Очки и бабочку, как у <span>В. Жириновского</span></p>
+            <p class="about-g">- Платье, как у <span>С. Йоханссон</span></p>
+            <p class="about-g">- Украшения, как у <span>В. Брежневой</span> </p>
+        </br></br>
+        <p class="green-style">Лучшие Артисты. Лучшие бренды</p>
+
+
+
+    </div>
     <div class="background-index-right">
         <div class="content-block">
 
 <p class="title-block">Зарегистрируйтесь через</p>
 <div class="settings-input">
+
+
+    <div class="social-bt">
     {% if socialaccount.providers  %}
 
     {% include "socialaccount/snippets/provider_list.html" with process="login" %}
@@ -44,33 +59,6 @@
     {% include "socialaccount/snippets/login_extra.html" %}
 
     {% endif %}
-
-    <div class="social-bt">
-        <div class="social-bt1 facebook-bt">
-            
-            <svg class="menu-item-block-svg icon-social-bt" viewBox="0 0 24 24">
-                <use xlink:href="#facebook-icon"></use>
-            </svg> 
-            <div class="text-social-bt"></div>
-
-        </div>
-        
-        <div class="social-bt1 google-bt">
-            
-            <svg class="menu-item-block-svg icon-social-bt" viewBox="0 0 24 24">
-                <use xlink:href="#google-icon"></use>
-            </svg> 
-            <div class="text-social-bt"></div>
-
-        </div>
-        <div class="social-bt1 vk-bt">
-            
-            <svg class="menu-item-block-svg icon-social-bt" viewBox="0 0 24 24">
-                <use xlink:href="#vk-icon"></use>
-            </svg>
-            <div class="text-social-bt"></div>
-
-        </div>
     </div>
 
     <form action="{% url 'account_signup' %}" method="POST" >
@@ -118,17 +106,17 @@
 
     </div>
 <div class ="about-teleport ">
-    <p class="title-block index-page">Покупайте вещи, аксессуары  из видео и фотографий</p>
+    <p class="title-block index-page">Получайте вещи, аксессуары  из видео и фотографий</p>
     <p class="phone-block">
         Teleport это быстрый способ купить любую вещь из фотографии или видео.
 Нравятся часы героя из фильма?  - пару секунд и вы узнаете бренд, цену и сможете их купить.
-Понравились джинсы из клипа? Шарф на фотографии instagram или vk? - за два клика вы узнаете все о них и также сможете приобрести.<br><br>
+Понравились джинсы из клипа? Шарф на фотографии instagram или vk? - за два клика вы узнаете все о них и также сможете приобрести. Кроме оригинальных вещей, Телепорт находит и похожие образы.<br><br>
 
 
 
 
     </p>
-    <p class="last-about">Получайте то что вам нравится прямо во время просмотра видео и фотографий</p>
+    <p class="last-about">Получайте что нравится, прямо во время просмотра видео и фотографий</p>
 
 
 </div>

@@ -3,9 +3,26 @@
 {% for provider in socialaccount.providers %}
 {% if provider.id == "openid" %}
 {% for brand in provider.get_brands %}
-    <a href="{% provider_login_url provider.id openid=brand.openid_url process=process %}" class="login-social-button {{provider.id}} {{brand.id}}-login">{{ brand.name|upper }}</a>
+    <a href="{% provider_login_url provider.id openid=brand.openid_url process=process %}" class="social-bt1 {{provider.id}} {{brand.id}}-login {{ brand.name|lower }}-bt">
+
+            <svg class="menu-item-block-svg icon-social-bt" viewBox="0 0 24 24">
+                <use xlink:href="#{{ brand.name|lower }}-icon"></use>
+            </svg>
+
+
+        </a>
+
 {% endfor %}
 {% endif %}
-    <a href="{% provider_login_url provider.id process=process %}" class="login-social-button {{provider.id}}-login">{{ provider.name|upper }}</a>
+
+     <a href="{% provider_login_url provider.id process=process %}"  class="social-bt1 {{provider.id}}-login {{ provider.name|lower }}-bt">
+
+            <svg class="menu-item-block-svg icon-social-bt" viewBox="0 0 24 24">
+                <use xlink:href="#{{ provider.name|lower }}-icon"></use>
+            </svg>
+
+
+        </a>
+
 {% endfor %}
 

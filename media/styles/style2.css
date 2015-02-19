@@ -1261,13 +1261,13 @@ article {
 }
 
 .social-bt1.facebook-bt {
-	background-color:#161616;/* #3b5998 */ 
+	background-color:#5b5b5b;/* #3b5998 */
 }
 .social-bt1.vk-bt {
 	background-color: #161616;/* #587a9f */ 
 }
 .social-bt1.google-bt {
-	background-color:#5b5b5b; /* #d73d32 */ 
+	background-color:#161616; /* #d73d32 */
 }
 
 .social-bt1.youtube-bt {
@@ -1520,15 +1520,53 @@ a.page-user-link-for-analytics {
 
 .background-index-left {
 	margin-top: 30px;
-	height: 320px;
-	
- 	width: 48%;
- float: left;
- background-image: url(../images/phone1.png);
+    padding-bottom: 10px;
+    padding-top: 20px;
+ 	width: 44%;
+    float: left;
+    background-color: #161616;
 	background-repeat: no-repeat;
 	background-size: 65%;
 	background-position:  center;
+    border: 10px solid #fff;
 }
+
+.background-index-left .title-block{
+    color: #00ff00;
+   margin-bottom: 0px;
+
+}
+
+.background-index-left .green-style{
+    color: #fff;
+    text-align: center;
+    font-size: 11px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+
+}
+
+.background-index-left .green-style.lower{
+
+    text-transform: lowercase;
+    font-size: 12px;
+    margin-bottom: 20px;
+
+}
+
+.background-index-left .about-g{
+    color: #fff;
+    text-align: left;
+    font-size: 12px;
+    padding: 5px 10px;
+
+}
+
+.background-index-left .about-g span{
+color: #00ff00;
+
+}
+
 .background-index-right {
 	margin-left: 4%;
 	margin-top: 30px;
