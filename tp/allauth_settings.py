@@ -9,7 +9,7 @@ ACCOUNT_AUTHENTICATION_METHOD = 'email'
 SOCIALACCOUNT_AUTO_SIGNUP = True
 LOGIN_REDIRECT_URL = '/'
 ACCOUNT_LOGOUT_REDIRECT_URL='/'
-
+SOCIALACCOUNT_QUERY_EMAIL = True
 
 SOCIALACCOUNT_PROVIDERS = {
     'facebook': {
@@ -17,8 +17,8 @@ SOCIALACCOUNT_PROVIDERS = {
         'METHOD': 'oauth2'
     },
     'google': {
-        'SCOPE': ['https://www.googleapis.com/auth/userinfo.profile'],
-        'AUTH_PARAMS': {'access_type': 'online'}
+       'SCOPE': ['https://www.googleapis.com/auth/userinfo.profile','https://www.googleapis.com/auth/userinfo.email'],
+       'AUTH_PARAMS': {'access_type': 'online'}
     }
 }
 

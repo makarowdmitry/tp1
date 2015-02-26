@@ -8,17 +8,24 @@
 
 
 {% block content %}
-<h1>{% trans "Confirm E-mail Address" %}</h1>
+<div class="background-index">
+<div class="background-index-center">
+
+<div class="background-index-right reset-password done">
+        <div class="content-block">
+
+<p class="title-block">{% trans "Confirm E-mail Address" %}</p>
+<div class="settings-input">
 
 {% if confirmation %}
 
 {% user_display confirmation.email_address.user as user_display %}
-        
+
 <p>{% blocktrans with confirmation.email_address.email as email %}Please confirm that <a href="mailto:{{email}}">{{ email }}</a> is an e-mail address for user {{ user_display }}.{% endblocktrans %}</p>
 
 <form method="post" action="{% url 'account_confirm_email' confirmation.key %}">
 {% csrf_token %}
-    <button type="submit">{% trans 'Confirm' %}</button>
+    <input type="submit" value="{% trans 'Confirm' %}" class="bt-login-register" />
 </form>
 
 {% else %}
@@ -29,4 +36,17 @@
 
 {% endif %}
 
+    </div></div></div>
+
+
+
+</div>
+</div>
+
+
+
+
+
+
 {% endblock %}
+

@@ -3,22 +3,46 @@
 
 {% load i18n %}
 
-{% block head_title %}{% trans "Signup" %}{% endblock %}
+{% block head_title %}{% trans "Регистрация" %}{% endblock %}
 
 {% block content %}
-    <h1>{% trans "Sign Up" %}</h1>
 
-<p>{% blocktrans with provider_name=account.get_provider.name site_name=site.name %}You are about to use your {{provider_name}} account to login to
-{{site_name}}. As a final step, please complete the following form:{% endblocktrans %}</p>
+<div class="background-index">
+<div class="background-index-center">
 
-<form class="signup" id="signup_form" method="post" action="{% url 'socialaccount_signup' %}">
+<div class="background-index-right reset-password">
+        <div class="content-block">
+
+<p class="title-block">{% trans "Sign Up" %}</p>
+<div class="settings-input">
+
+
+<p>{% blocktrans with provider_name=account.get_provider.name site_name=site.name %}
+    Вы собираетесь использовать свой аккаунт на {{provider_name}} для входа на {{site_name}}. В качестве последнего шага, введите свой email:
+{% endblocktrans %}</p>
+<br>
+
+
+
+    <form class="signup" id="signup_form" method="post" action="{% url 'socialaccount_signup' %}">
   {% csrf_token %}
   {{ form.as_p }}
   {% if redirect_field_value %}
   <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
   {% endif %}
-  <button type="submit">{% trans "Sign Up" %} &raquo;</button>
+  <input type="submit" class="bt-login-register" value="{% trans "Sign Up" %}"/>
 </form>
 
 
+
+    </div></div></div>
+
+
+
+</div>
+</div>
+
+
+
 {% endblock %}
+

@@ -151,7 +151,7 @@ def analytics(request):
 
         list_all_minutes=[]
         i=0
-        while i>-15:#43200
+        while i>-1500:#43200
             delta_time_this = datetime.timedelta(minutes=i)
             end_time = now_date+delta_time_this
             for_append = {'minute':end_time.replace(second=0,microsecond=0),'count':0}
@@ -159,9 +159,9 @@ def analytics(request):
             i=i-1
 
 
-        result_list_raw  = qs.values('minute').annotate(count=Count('date'))
 
-        qs1 = result_list_raw
+        result_list_raw  = qs.values('minute').annotate(count=Count('date'))
+        q2  = qs.values('minute')
 
         result_list = []
         for res in result_list_raw:
@@ -175,7 +175,14 @@ def analytics(request):
                 if item_l['minute'] == item_r['minute']:
                     item_l['count']=item_r['count']
 
+        first_minute = list_all_minutes[0]['minute']
 
+        for_chart_view = []
+        for item_count in list_all_minutes:
+            count_this = item_count['count']
+            for_chart_view.append(count_this)
+
+        for_chart_view.reverse()
 
         #Данные для графика "Клики" c сделать список по минутам
 
@@ -196,7 +203,7 @@ def analytics(request):
         income_all = income_pp + income_cpa
 
 
-        return render_to_response('analytics.html',{'qs1':qs1,'result_list':sorted(result_list),'list_all_minutes':list_all_minutes,'count_click_tag': count_click_tag , 'user':user, 'group':group, 'profile': profile, 'get_money':get_money, 'income_cpa':income_cpa, 'income_pp':income_pp, 'count_all_views':count_all_views, 'count_subs':count_subs,'click_rate':click_rate,'income_all':income_all, 'list_item':list_item})
+        return render_to_response('analytics.html',{'first_minute':first_minute, 'for_chart_view':for_chart_view,'q2':qs,'qs1':sorted(result_list_raw),'result_list':sorted(result_list),'list_all_minutes':list_all_minutes,'count_click_tag': count_click_tag , 'user':user, 'group':group, 'profile': profile, 'get_money':get_money, 'income_cpa':income_cpa, 'income_pp':income_pp, 'count_all_views':count_all_views, 'count_subs':count_subs,'click_rate':click_rate,'income_all':income_all, 'list_item':list_item})
 
 def faq(request):
     if not request.user.is_authenticated():
