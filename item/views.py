@@ -230,6 +230,23 @@ def analytics(request):
 
         return render_to_response('analytics.html',{'pr_vk':pr_vkcom_item, 'pr_fb':pr_facebook_item, 'pr_insta':pr_instagram_item, 'pr_y':pr_youtube_item, 'pr_ok':pr_odnoklassniki_item, 'pr_ot':pr_other_item, 'first_minute':first_minute, 'for_chart_view':for_chart_view,'q2':qs,'qs1':sorted(result_list_raw),'result_list':sorted(result_list),'list_all_minutes':list_all_minutes,'count_click_tag': count_click_tag , 'user':user, 'group':group, 'profile': profile, 'get_money':get_money, 'income_cpa':income_cpa, 'income_pp':income_pp, 'count_all_views':count_all_views, 'count_subs':count_subs,'click_rate':click_rate,'income_all':income_all, 'list_item':list_item})
 
+def send_email_money(request):
+    if not request.user.is_authenticated():
+        return redirect('/')
+
+    if request.method == 'POST':
+        get_money = request.POST.get("money")
+
+    user = request.user
+    subject = 'Вывести {0} рублей для {1} id{2}'.format(get_money,user.username,user.id)
+    message = ''
+
+    send_mail(subject, message, 'noreply@teleport.ink',
+    ['hi@teleport.ink','makarow.dmitry@gmail.com'], fail_silently=False)
+
+    return HttpResponse(get_money)
+
+
 def faq(request):
     if not request.user.is_authenticated():
         return redirect('/')

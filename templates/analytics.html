@@ -4,35 +4,51 @@
 <script src="/media/scripts/highcharts.js"></script>
 <script>
 
-/*
-* Всего:
-* 1. График посещений (Каждый день. Начиная с самого первого дня.)
-*
-* 2. График кликов
-* 3. График социальных сетей
-*
-* Сегодня:
-* 1. График посещений (Каждую минуту - старт текущие сутки)
-* 2. График кликов
-* 3. График социальных сетей
-*
-* Неделя:
-* 1. График посещений (Каждый час. Старт Текущая неделя)
-* 2. График кликов
-* 3. График социальных сетей
-*
-* Месяц:
-* 1. График посещений (Каждую минуту)
-* 2. График кликов
-* 3. График социальных сетей
-*
-*
-*
-* */
-
-
-
 $(document).ready(function(){
+
+$(document).on('click','.click_money',function(){
+    
+    $('.background-window').show(0);
+    $('.windiw-info-block').show(0);
+});
+
+$(document).on('click','.button-additional.bt-no',function(){
+    
+    $('.background-window').hide(0);
+    $('.windiw-info-block').hide(0);
+});
+
+
+$(document).on('click','.button-general.bt-yes',function(){
+    
+
+        $.ajax({
+                    url: "/send_email_money/",
+                    type: "POST",
+                    dataType:"html",
+                    data: {
+                        "money": {% if get_money != '0' %}{{ get_money.money }}{% else %}0{% endif %}  
+
+
+                                            },
+                    error: function() {
+                        alert('Ошибка получения запроса');
+                    },
+
+                    success: function(data) {
+
+                        $('.button-general.bt-yes').text('Заявка отправлена');
+                     
+                        setTimeout(function(){$('.background-window').hide(0);$('.windiw-info-block').hide(0);$('.button-general.bt-yes').text('Отправить заявку');},2000);
+                        
+                            
+                      
+                    }
+        });
+      
+   
+});
+
 
 $(function () {
     var now = new Date().getTime();
@@ -167,30 +183,17 @@ $(function () {
 
 {% block content %}
 
-<div class="windiw-info-block">
-    <p class="text-for-window">Удалить метку навсегда?</p>
-    <div class="button-additional bt-no">нет</div>
-    <div class="button-general bt-yes">да</div>
-    
-    <p>Product Placement</p>
+<div class="windiw-info-block">    
+    <p>Заявка на снятие денег</p>
     <p class="text-for-window more-tr">
-        Существует два главных класса мантр. Первый класс включает в себя мантры, требующие передачи-посвящения от лица, осуществившего в своей практике силу мантры и испытавшего ее результаты. <…> Второй, как считается, производит результаты вне зависимости от такой передачи.
+    Мы переведем на ваш счет <b>{% if get_money != '0' %}{{ get_money.money }}{% else %}0{% endif %} рублей.</b> Перед отправкой заявки проверьте ваши реквизиты на странице настроек - <a href="/sedit/">http://teleport.ink/sedit</a><br><br>
 
-В этом случае важно тщательно воспроизводить звучание. Важнейшая краткая индуистская мантра — Ом
+    После успешной обработки заявки, вам на <b>{{user.email}}</b> придет подтверждение.<br><br>
+    Заявка будет обработана, при наличии суммы, готовой к снятию, более 500 рублей.
+
     </p>
-    <div class="button-general bt-ok">ok</div>
-
-    <label>Название бренда</label>
-    <input type="text"/>
-    <div class="button-general bt-yes">сохранить</div>
-    <div class="button-additional bt-no">отмена</div>
-    <div class="menu-item-block delete-bt-color">               
-        <svg class="menu-item-block-svg" viewBox="0 0 24 24">
-            <use xlink:href="#delete" ></use>
-        </svg>
-    </div>
-    
-
+  <div class="button-additional bt-no">Отмена</div>
+    <div class="button-general bt-yes">Отправить заявку</div>
 
 </div>
 
@@ -206,7 +209,7 @@ $(function () {
         <p class="analytics-text-about">Готовы к снятию</p> 
     </div>
     <div class="analytics-money-block-right">
-        <div class="button-general get-money next-link">Вывести деньги</div>
+        <div class="button-general get-money next-link click_money">Вывести деньги</div>
         <a href="/faq" class="next-link">FAQ по разделу</a>
     </div>
 </div>
