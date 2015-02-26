@@ -85,9 +85,9 @@ def send_lead(request):
         phone = request.POST.get("phone")
         where = request.POST.get("where")
 
-    subject = 'Заявка от {0}, {1}, {2}'.format(name,email,link)
-    message1 = link+'<br/>'+email+'<br/>'+name+'<br/>'+phone+'<br/>'+where
-    message = link+' '+email+' '+name+' '+phone+' '+where
+    subject = u'Заявка от {0}, {1}, {2}'.format(name,email,link)
+    message1 = u'Ссылка: {0}<br/>Email: {1}<br/>Name: {2}<br/>Phone: {3}<br/>Как узнали о Teleport: {4}'.format(link,email,name,phone,where)
+    message = u'{0} {1} {2} {3} {4}'.format(link,email,name,phone,where)
 
     send_mail(subject, message, 'noreply@teleport.ink',
     ['hi@teleport.ink','makarow.dmitry@gmail.com'], fail_silently=False, html_message=message1)

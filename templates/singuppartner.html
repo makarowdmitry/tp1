@@ -13,11 +13,11 @@
 
 	$(document).on('click','.bt-settings.yes-lead', function(){
 
-	input_link = $('input[name=link]').val();
-	input_email = $('input[name=email]').val();
-	input_phone = $('input[name=phone]').val();
-	input_name = $('input[name=name]').val();
-	select_where = $('option:selected').val();
+	input_link = String($('input[name=link]').val())
+	input_email = String($('input[name=email]').val())
+	input_phone = String($('input[name=phone]').val())
+	input_name = String($('input[name=namename]').val())
+	select_where = String($('option:selected').val())
 
 	if (input_link.length>0 && input_email.length>0 && input_phone.length>0 && input_name.length>0 && select_where.length>0 ){
 		 $.ajax({
@@ -31,7 +31,7 @@
                         "name": input_name,
                         "where": select_where,
                                             },
-                    error: function() {
+                    error: function(data) {
                         alert('Ошибка получения запроса');
                     },
 
@@ -90,7 +90,7 @@
 	<input type="text" name="link" placeholder="http://"/>
 
 	<label>Контактный телефон*</label>
-	<input type="phone" name="phone" placeholder="+7 (910) 123 45 67" />
+	<input type="text" name="phone" placeholder="+7 (910) 123 45 67" />
 
 	<label>Email*</label>
 	<input type="email" name="email" placeholder="example@gmail.com"/>
@@ -113,7 +113,7 @@
 
 
 	<label>Имя*</label>
-	<input type="text" name="name" placeholder="Введите имя" />
+	<input type="text" name="namename" placeholder="Введите имя" />
 
 	<label>Где узнали о Teleport?</label>
 	<select>
