@@ -105,7 +105,7 @@ def analytics(request):
 
         click_rate = round(profile.price_cpa,1)
 
-        item_id_this_user = Item.objects.filter(user_id=user.id)
+        item_id_this_user = Item.objects.filter(user_id=user.id, public=1)
         count_item_raw = CountItem.objects.filter(item_id=item_id_this_user)
         count_item= count_item_raw.count()
         count_username = CountUsername.objects.filter(user_page_id=user.id).count()
@@ -119,6 +119,15 @@ def analytics(request):
 
         list_item = []
 
+        view_all_item = 0
+        view_vkcom_item = 0
+        view_facebook_item = 0
+        view_instagram_item = 0
+        view_youtube_item = 0
+        view_odnoklassniki_item = 0
+        view_other_item = 0
+
+
         for item in item_id_this_user:
             item_id = item.id
             view_all = CountItem.objects.filter(item_id=item_id).count()
@@ -128,6 +137,15 @@ def analytics(request):
             view_youtube = CountItem.objects.filter(item_id=item_id, referer__icontains='youtube').count()
             view_odnoklassniki = CountItem.objects.filter(item_id=item_id, referer__icontains='odnoklas').count()
             view_other = view_all-view_vkcom-view_facebook-view_instagram-view_youtube-view_odnoklassniki
+            
+            view_all_item += view_all
+            view_vkcom_item += view_vkcom
+            view_facebook_item += view_facebook
+            view_instagram_item += view_instagram
+            view_youtube_item += view_youtube
+            view_odnoklassniki_item += view_odnoklassniki
+            view_other_item += view_other
+
 
             photo_this_item = Photo.objects.filter(item_id=item_id)
             tags_this_photo = Tag.objects.filter(photo_id=photo_this_item)
@@ -138,12 +156,19 @@ def analytics(request):
             item_data = {'id':item_id,'all':view_all,'vk':view_vkcom,'facebook':view_facebook,'instagram':view_instagram,'youtube':view_youtube,'odnoklass':view_odnoklassniki,'other':view_other,'all_click':all_click_tag,'income':income_all_this_item}
             list_item.append(item_data)
 
+ 
+        pr_vkcom_item = (view_vkcom_item*100)/view_all_item
+        pr_facebook_item = (view_facebook_item*100)/view_all_item
+        pr_instagram_item = (view_instagram_item*100)/view_all_item
+        pr_youtube_item = (view_youtube_item*100)/view_all_item
+        pr_odnoklassniki_item = (view_odnoklassniki_item*100)/view_all_item
+        pr_other_item = (view_other_item*100)/view_all_item
 
 
 
         #Данные для графика "Просмотры" c сделать список по минутам
-        truncate_date = connection.ops.date_trunc_sql('minute','date')
-        qs = count_item_raw.extra({'minute':truncate_date})
+        truncate_date = connection.ops.date_trunc_sql('hour','date')
+        qs = count_item_raw.extra({'hour':truncate_date})
         now_date = datetime.datetime.now()
 
 
@@ -151,31 +176,31 @@ def analytics(request):
 
         list_all_minutes=[]
         i=0
-        while i>-1500:#43200
-            delta_time_this = datetime.timedelta(minutes=i)
+        while i>-48:#43200
+            delta_time_this = datetime.timedelta(hours=i)
             end_time = now_date+delta_time_this
-            for_append = {'minute':end_time.replace(second=0,microsecond=0),'count':0}
+            for_append = {'hour':end_time.replace(minute=0,second=0,microsecond=0),'count':0}
             list_all_minutes.append(for_append)
             i=i-1
 
 
 
-        result_list_raw  = qs.values('minute').annotate(count=Count('date'))
-        q2  = qs.values('minute')
+        result_list_raw  = qs.values('hour').annotate(count=Count('date'))
+        q2  = qs.values('hour')
 
         result_list = []
         for res in result_list_raw:
-            res_raw = res['minute']
+            res_raw = res['hour']
             res_raw = res_raw.replace(tzinfo=None)
-            result_list.append({'minute':res_raw,'count':res['count']})
+            result_list.append({'hour':res_raw,'count':res['count']})
 
 
         for item_l in list_all_minutes:
             for item_r in result_list:
-                if item_l['minute'] == item_r['minute']:
+                if item_l['hour'] == item_r['hour']:
                     item_l['count']=item_r['count']
 
-        first_minute = list_all_minutes[0]['minute']
+        first_minute = list_all_minutes[0]['hour']
 
         for_chart_view = []
         for item_count in list_all_minutes:
@@ -203,7 +228,7 @@ def analytics(request):
         income_all = income_pp + income_cpa
 
 
-        return render_to_response('analytics.html',{'first_minute':first_minute, 'for_chart_view':for_chart_view,'q2':qs,'qs1':sorted(result_list_raw),'result_list':sorted(result_list),'list_all_minutes':list_all_minutes,'count_click_tag': count_click_tag , 'user':user, 'group':group, 'profile': profile, 'get_money':get_money, 'income_cpa':income_cpa, 'income_pp':income_pp, 'count_all_views':count_all_views, 'count_subs':count_subs,'click_rate':click_rate,'income_all':income_all, 'list_item':list_item})
+        return render_to_response('analytics.html',{'pr_vk':pr_vkcom_item, 'pr_fb':pr_facebook_item, 'pr_insta':pr_instagram_item, 'pr_y':pr_youtube_item, 'pr_ok':pr_odnoklassniki_item, 'pr_ot':pr_other_item, 'first_minute':first_minute, 'for_chart_view':for_chart_view,'q2':qs,'qs1':sorted(result_list_raw),'result_list':sorted(result_list),'list_all_minutes':list_all_minutes,'count_click_tag': count_click_tag , 'user':user, 'group':group, 'profile': profile, 'get_money':get_money, 'income_cpa':income_cpa, 'income_pp':income_pp, 'count_all_views':count_all_views, 'count_subs':count_subs,'click_rate':click_rate,'income_all':income_all, 'list_item':list_item})
 
 def faq(request):
     if not request.user.is_authenticated():

@@ -34,12 +34,17 @@
 
 $(document).ready(function(){
 
-
-
-
 $(function () {
     var now = new Date().getTime();
-var minute_for_view = parseInt(now) - (1500*60*1000);
+var minute_for_view = parseInt(now) - (41*3600*1000);
+var mintime = new Date(minute_for_view);
+var minny = mintime.getFullYear();
+var minnm = mintime.getMonth();
+var minnd = mintime.getDate();
+var minnh = mintime.getHours();
+var end_date = new Date(minny,minnm,minnd,minnh).getTime();
+
+
 //var for_chart_views = new Date(minute_for_view)
 //alert(for_chart_views);
     $('#container').highcharts({
@@ -89,65 +94,13 @@ var minute_for_view = parseInt(now) - (1500*60*1000);
 
         series: [{
             type: 'area',
-            name: 'Посещения',
-            pointInterval: 60 * 1000,
-            pointStart: minute_for_view,
+            name: 'Просмотры',
+            pointInterval: 60 * 60 * 1000,
+            pointStart: end_date,
             data: {{for_chart_view}}
         }]
     });
 
-	$('#container1').highcharts({
-        chart: {
-            zoomType: 'x'
-        },
-        title: {
-           text: false
-        },
-        subtitle: {
-            text: false
-        },
-        xAxis: {
-            type: 'datetime',
-            minRange: 14 * 24 * 3600000 // fourteen days
-        },
-        yAxis: {
-            title: {
-                text: false
-            }
-        },
-        legend: {
-            enabled: false
-        },
-        plotOptions: {
-            area: {
-                fillColor: {
-                    linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1},
-                    stops: [
-                        [0, Highcharts.getOptions().colors[0]],
-                        [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
-                    ]
-                },
-                marker: {
-                    radius: 2
-                },
-                lineWidth: 1,
-                states: {
-                    hover: {
-                        lineWidth: 1
-                    }
-                },
-                threshold: null
-            }
-        },
-
-        series: [{
-            type: 'area',
-            name: 'Клики',
-            pointInterval: 24 * 3600 * 1000,
-            pointStart: for_chart_views,
-            data: []
-        }]
-    });
 
 $(function () {
 
@@ -195,12 +148,12 @@ $(function () {
             type: 'pie',
             name: 'Посещения',
             data: [
-                ['Instagram',   45.0],
-                ['Facebook',       26.0],
-                ['Youtube',    21.5],
-                ['Vk.com',     10.5],
-                ['Odnoklassniki',   4.0],
-                ['Другие',   3.0]
+                ['Instagram',   {{ pr_insta }}],
+                ['Facebook',       {{ pr_fb }}],
+                ['Youtube',    {{ pr_y }}],
+                ['Vk.com',     {{ pr_vk }}],
+                ['Odnoklassniki',   {{ pr_ok }}],
+                ['Другие',   {{ pr_ot }}]
             ]
         }]
     });
@@ -264,7 +217,7 @@ $(function () {
         <div class="button-general datepick-block-bt">сегодня</div>
         <div class="button-general datepick-block-bt">За Неделю</div>
         <div class="button-general datepick-block-bt">За месяц</div>
-        <div class="button-general datepick-block-bt">всего</div>
+        <div class="button-general datepick-block-bt active">всего</div>
     </div>
     <div class="revenue-block">
         <div class="revenue-block-left">
@@ -291,10 +244,10 @@ $(function () {
 
     <div class="revenue-block background-color-title">
         <div class="revenue-block-left">
-            <p class="title-revenue-block">Просмотров:</p>
+            <p class="title-revenue-block">Статистика</p>
         </div>
         <div class="revenue-block-right">
-            <p class="title-revenue-block">{{ count_all_views }}</p>
+            <p class="title-revenue-block">просмотров</p>
         </div>
         
     </div>
@@ -312,19 +265,8 @@ $(function () {
         
     </div>
 <div id="container2" class="charts-style-revenue"></div>
-<div class="revenue-block background-color-title">
-        <div class="revenue-block-left">
-            <p class="title-revenue-block">Клики:</p>
-        </div>
-        <div class="revenue-block-right">
-            <p class="title-revenue-block">{{ count_click_tag }}</p>
-        </div>
-        
-</div>
-<div class="analytics-block-text-general">
-        <p>Доход с одного клика: <span>{{ click_rate }} руб.</span></p>
-</div>
-<div id="container1" class="charts-style-revenue"></div>
+
+
 
 
 <div class="table-analytics-post" >

@@ -1348,6 +1348,19 @@ a.page-user-link-for-analytics {
 
 }
 
+.button-general.datepick-block-bt.active{
+	background-color:#5b5b5b;
+
+}
+.button-general.datepick-block-bt.active:hover{
+	background-color:#696969;
+
+}
+
+
+
+
+
 /*Блок аналитики доходов*/
 .revenue-block {
 	display: block;
@@ -1870,7 +1883,7 @@ article.moderator-page {
 }
 
 .button-general.bt-moderation.page-for-add-link{
-	width: 50%;
+	width: 48%;
 }
 
 .tag-with-block.moderator-page.page-for-add-link {
