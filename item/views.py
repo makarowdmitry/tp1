@@ -78,9 +78,19 @@ def index(request):
 
 
 def send_lead(request):
+    if request.method == 'POST':
+        link = request.POST.get("link")
+        email = request.POST.get("email")
+        name = request.POST.get("name")
+        phone = request.POST.get("phone")
+        where = request.POST.get("where")
 
-    send_mail('Привет', 'Ну как дела у тебя?', 'noreply@teleport.ink',
-    ['makarow.dmitry@gmail.com','dmitry.makarow@yandex.ru'], fail_silently=False)
+    subject = 'Заявка от {0}, {1}, {2}'.format(name,email,link)
+    message1 = link+'<br/>'+email+'<br/>'+name+'<br/>'+phone+'<br/>'+where
+    message = link+' '+email+' '+name+' '+phone+' '+where
+
+    send_mail(subject, message, 'noreply@teleport.ink',
+    ['hi@teleport.ink','makarow.dmitry@gmail.com'], fail_silently=False, html_message=message1)
 
     return HttpResponse()
 

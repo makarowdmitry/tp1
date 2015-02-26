@@ -203,7 +203,7 @@ $('#js-women_check').click(function(){
                         "pp": pp
                                   },
                     error: function() {
-                        alert('Ошибка получения запроса');
+                        
                     },
 
                     success: function(data) {

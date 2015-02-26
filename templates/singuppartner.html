@@ -4,26 +4,73 @@
 {% load i18n %}
 {% load widget_tweaks %}
 
+
 {% block head_title %}{% trans "Signup" %}{% endblock %}
 
+{% block scripts %}
+<script type="text/javascript">
+	
+
+	$(document).on('click','.bt-settings.yes-lead', function(){
+
+	input_link = $('input[name=link]').val();
+	input_email = $('input[name=email]').val();
+	input_phone = $('input[name=phone]').val();
+	input_name = $('input[name=name]').val();
+	select_where = $('option:selected').val();
+
+	if (input_link.length>0 && input_email.length>0 && input_phone.length>0 && input_name.length>0 && select_where.length>0 ){
+		 $.ajax({
+                    url: "/send_lead/",
+                    type: "POST",
+                    dataType:"html",
+                    data: {
+                        "link": input_link,
+                        "email": input_email,
+                        "phone": input_phone,
+                        "name": input_name,
+                        "where": select_where,
+                                            },
+                    error: function() {
+                        alert('Ошибка получения запроса');
+                    },
+
+                    success: function(data) {
+
+                        $('.title-block:first').html('Заявка отправлена.<br> Мы свяжемся с вами').css('color','green');
+						setTimeout(function(){$('.title-block:first').html('Подайте заявку на подключение <br> в качестве партнера').css('color','#161616');},5000);
+                        
+                            
+                      
+                    }
+        });
+
+
+	}
+	else {
+		$('.title-block:first').text('Заполните все поля!').css('color','red');
+		setTimeout(function(){$('.title-block:first').html('Подайте заявку на подключение <br> в качестве партнера').css('color','#161616');},2000);
+	}
+
+
+	});
+
+
+	
+
+</script>
+
+
+{% endblock %}
 
 {% block content %}
 
-<div class="windiw-info-block processing rules">    
-    <p>Отправлено на обработку</p>
-    <p class="text-for-window more-tr processing">
-        Фотографии отправлены на обработку.<br>
-        Teleport определит где можуно купить отмеченные вещи.<br><br>
+<div class="windiw-info-block">    
+    <p style="color:red">Заполните все поля</p>
+    
+  
 
-
-        Затем отправит вам на <b>{{ user.email }}</b> ссылку для публикции
-
-
-
-    </p>
-    <a href="#" class="button-general bt-ok-rules">ok</a>
 </div>
-
 
 <div class="background-index">
 <div class="background-index-center">
@@ -40,19 +87,13 @@
 
 
 	<label>Ссылка на вашу страницу в любой социальной сети, либо сайт*</label>
-	<input type="text" placeholder="http://"/>
+	<input type="text" name="link" placeholder="http://"/>
 
 	<label>Контактный телефон*</label>
-	<input type="text" placeholder="+7 (910) 123 45 67" />
+	<input type="phone" name="phone" placeholder="+7 (910) 123 45 67" />
 
 	<label>Email*</label>
-	<input type="text" placeholder="example@gmail.com"/>
-
-	
-	
-	
-	
-	
+	<input type="email" name="email" placeholder="example@gmail.com"/>
 	
 
 	
@@ -72,7 +113,7 @@
 
 
 	<label>Имя*</label>
-	<input type="text" placeholder="Введите имя" />
+	<input type="text" name="name" placeholder="Введите имя" />
 
 	<label>Где узнали о Teleport?</label>
 	<select>
@@ -88,7 +129,7 @@
 		<option >Другое</option>
 	</select>
 	
-	<div class="bt-settings">Подать заявку</div>
+	<div class="bt-settings yes-lead">Подать заявку</div>
 	
 	<p class="text-agreement">Подавая заявку вы соглашаетесь на создание аккаунта, тем самым принимаете <a href="#" class="goods-rules">Условия предоставления услуг</a> и <a href="#" class="politic-rules">Политику конфиденциальности</a> Teleport. </p>
 	
