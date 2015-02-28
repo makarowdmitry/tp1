@@ -40,7 +40,7 @@ $('.js-panel-brandname').each(function(){
             position();
         });
 
-},10);
+},100);
 
 
 
