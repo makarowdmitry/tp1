@@ -38,10 +38,12 @@ def index(request):
     next_start_from = start_from + articles_per_page
     items = items_raw.order_by('-id')[start_from:next_start_from]
     user = request.user
-    if user.username:
+    try:
         profile = UserProfile.objects.get(user_id=user.id)
-    else:
-        profile = 0
+    except:
+        prof_reg = UserProfile(user_id=user.id)
+        prof_reg.save()
+        profile = UserProfile.objects.get(user_id=user.id)
 
     subscription = Subs.objects.filter(user_id = user.id).values_list('sub_to_user_id', flat=True)
 
