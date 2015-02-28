@@ -2167,3 +2167,14 @@ ul.horizontal li {
     position: relative;
 }
 
+/*mobile style*/
+
+@media only screen and (max-device-width: 480px) {
+ 
+ .content-block{
+	width: 100%;
+	max-width: none;
+	margin: 0 auto 0 auto;
+
+}
+}
