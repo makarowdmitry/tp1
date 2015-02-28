@@ -8,7 +8,6 @@ class AddPhoto(forms.ModelForm):
     class Meta:
         model = Photo
         widgets = {'image':MultiFileInput}
-        fields = widgets
 
 class ChangePhoto(forms.ModelForm):
     class Meta:

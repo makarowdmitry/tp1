@@ -1142,7 +1142,7 @@ def item(request, itemid):
 
 
     if user.username:
-        profile = UserProfile.objects.get(user_id=user.id)
+        profile = UserProfile.objects.filter(user_id=user.id)
     else:
         profile = 0
 
