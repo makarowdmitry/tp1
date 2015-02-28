@@ -131,7 +131,7 @@ def analytics(request):
 
         list_item = []
 
-        view_all_item = 0
+        view_all_item = 1
         view_vkcom_item = 0
         view_facebook_item = 0
         view_instagram_item = 0
