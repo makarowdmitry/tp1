@@ -39,11 +39,11 @@ def index(request):
     items = items_raw.order_by('-id')[start_from:next_start_from]
     user = request.user
     try:
-        profile = UserProfile.objects.get(user_id=user.id)
+        profile = UserProfile.objects.filter(user_id=user.id)
     except:
         prof_reg = UserProfile(user_id=user.id)
         prof_reg.save()
-        profile = UserProfile.objects.get(user_id=user.id)
+        profile = UserProfile.objects.filter(user_id=user.id)
 
     subscription = Subs.objects.filter(user_id = user.id).values_list('sub_to_user_id', flat=True)
 
@@ -105,7 +105,7 @@ def analytics(request):
     #Берем список групп данного пользователя
     groups_list = user.groups.all().values_list('name', flat=True)
     partner_yes = 'partner' in groups_list
-    profile = UserProfile.objects.get(user_id=user.id)
+    profile = UserProfile.objects.filter(user_id=user.id)
 
     #Если присутсвует "admin" присваем значение group = "admin"
     if partner_yes == 1:
@@ -267,7 +267,7 @@ def faq(request):
     #Берем список групп данного пользователя
     groups_list = user.groups.all().values_list('name', flat=True)
     partner_yes = 'partner' in groups_list
-    profile = UserProfile.objects.get(user_id=user.id)
+    profile = UserProfile.objects.filter(user_id=user.id)
 
     #Если присутсвует "admin" присваем значение group = "admin"
     if partner_yes == 1:
@@ -335,7 +335,7 @@ def subscription(request):
     items = all_item[start_from:next_start_from]
 
     if user.username:
-        profile = UserProfile.objects.get(user_id=user.id)
+        profile = UserProfile.objects.filter(user_id=user.id)
     else:
         profile = 0
 
@@ -420,7 +420,7 @@ def saved_tag(request):
     items = item_all[start_from:next_start_from]
 
     if user.username:
-        profile = UserProfile.objects.get(user_id=user.id)
+        profile = UserProfile.objects.filter(user_id=user.id)
     else:
         profile = 0
 
@@ -1049,7 +1049,7 @@ def username(request, usernamethis):
     items = items_user_this[start_from:next_start_from]
     user = request.user
     if user.username:
-        profile = UserProfile.objects.get(user_id=user.id)
+        profile = UserProfile.objects.filter(user_id=user.id)
     else:
         profile = 0
 
