@@ -2177,4 +2177,39 @@ ul.horizontal li {
 	margin: 0 auto 0 auto;
 
 }
+
+/*Стиль главной страницы*/
+.background-index {
+	top: 0%;
+	width: 100%;
+	position: relative;
+	height: auto;
+	background-image: none;
+	background-repeat: no-repeat;
+	background-size: 0%;
+	background-color:#d5d5d5; 
+	
+}
+.background-index-center {
+	width: 100%;
+	margin: 0 auto;
+	float: left;
+	
+	height: 300px;
+}
+
+.background-index-left {
+	display: none;
+}
+
+.background-index-right {
+	margin-left: 0%;
+	margin-top: 30px;
+ background-color: #fff;
+ padding-bottom: 10px;
+ padding-top: 20px;
+ width: 100%;
+ float: left;
+
+}
 }
