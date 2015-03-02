@@ -2,6 +2,26 @@
 
 {% block articles %}
 
+<!-- Здесь окно приветствия-->
+{% if hi_teleport == '0' %}
+
+<div class="cookie-help">
+    <p class="title-block">Покупайте одежду из клипов, фильмов и фотографий</p><br/>
+    
+    <p>Нажмите на яркую метку и вы окажетесь в магазине.</p><br/>
+    <img src="/media/images/misc/slide1.png"><br/><br/><br/>
+    
+    <p>Используйте кнопку</p><br/>
+    <img src="/media/images/misc/btt_help.png"><br/><br/>
+    <p>Чтобы увидеть больше</p><br/><br/><br/>
+    <a href="#" class ="bt-no-help">Закрыть</a>
+
+</div>
+{% else %}
+
+
+{% endif %}
+
 <!-- Страница Юзернейм все item user -->
             
 <div class="user-info-general style-userpage">

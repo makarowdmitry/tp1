@@ -995,3 +995,7 @@ $(document).on('click','.button-general.bt-ok-rules', function(){
 });
 
 
+//Закрытие окна помощи
+$(document).on('click','.bt-no-help', function (){
+  $('.cookie-help').remove();
+});

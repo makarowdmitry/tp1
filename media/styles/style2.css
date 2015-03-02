@@ -2167,10 +2167,30 @@ ul.horizontal li {
     position: relative;
 }
 
+
+.cookie-help {
+	margin-top: 10px;
+	display: block;
+	float: left;
+	border: 1px solid #161616;
+	background-color: #fff;
+	width: 90%;
+	padding: 5%;
+	text-align: center;
+}
+
+
 /*mobile style*/
 
 @media only screen and (max-device-width: 480px) {
  
+.cookie-help {
+ border-top: 1px solid #161616;
+ border-bottom: 1px solid #161616;
+ border-left: 0px solid #161616;
+ border-right: 0px solid #161616;
+}
+
  .content-block{
 	width: 100%;
 	max-width: none;
