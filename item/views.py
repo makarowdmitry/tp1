@@ -301,6 +301,57 @@ def faq(request):
     return render_to_response('faq.html',{'user':user, 'group':group, 'profile': profile})
 
 
+def terms(request):
+    user = request.user
+    #Берем список групп данного пользователя
+    groups_list = user.groups.all().values_list('name', flat=True)
+    partner_yes = 'partner' in groups_list
+
+    if user.username:
+        try:
+            profile = UserProfile.objects.get(user_id=user.id)
+        except:
+            prof_reg = UserProfile(user_id=user.id)
+            prof_reg.save()
+            profile = UserProfile.objects.get(user_id=user.id)
+    else:
+        profile = 0
+
+    #Если присутсвует "admin" присваем значение group = "admin"
+    if partner_yes == 1:
+        group = 'partner'
+    else:
+        group = 0
+
+
+    return render_to_response('faq.html',{'user':user, 'group':group, 'profile': profile})
+
+def privacy(request):
+    user = request.user
+    #Берем список групп данного пользователя
+    groups_list = user.groups.all().values_list('name', flat=True)
+    partner_yes = 'partner' in groups_list
+
+    if user.username:
+        try:
+            profile = UserProfile.objects.get(user_id=user.id)
+        except:
+            prof_reg = UserProfile(user_id=user.id)
+            prof_reg.save()
+            profile = UserProfile.objects.get(user_id=user.id)
+    else:
+        profile = 0
+
+    #Если присутсвует "admin" присваем значение group = "admin"
+    if partner_yes == 1:
+        group = 'partner'
+    else:
+        group = 0
+
+
+    return render_to_response('faq.html',{'user':user, 'group':group, 'profile': profile})
+
+
 
 def tag_redirect(request, tagid, itemid):
     tag = Tag.objects.get(id=tagid)
