@@ -1756,6 +1756,11 @@ color: #00ff00;
 	text-decoration: underline;
 }
 
+.block-faq-border {
+	width: 90%;
+	padding: 5%;
+
+}
 
 .faq-block-a {
 	float: left;
@@ -1769,6 +1774,8 @@ color: #00ff00;
 }
 
 .faq-block-a img {
+	position: relative;
+	display: block;
 	text-align: center;
 	margin: 0px 0px 20px 0px;
 }
